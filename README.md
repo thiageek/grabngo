@@ -11,3 +11,13 @@ Miro: https://miro.com/welcomeonboard/SVdxc1dwQjZBVGI1bGxYRDJjSndNdnlxZ2ZJOXVOMl
 - Cozinheiro: Usuário responsável por preparar e entregar um pedido.
 - Pedido: Solicitação de preparo e entrega de produtos, vinculado a um pagamento, podendo estar vinculado a um cliente. Possui um status de acompanhamento.
 - Status de acompanhamento: Indicação do estado de um pedido, podendo ser "Realizado", "Na fila", "Expirado", "Em preparo", "Cancelado", "Pronto", "Aguardando Retirada", "Descartado" e "Entregue"
+
+## Prisma
+
+```bash 
+# Cria migrations e atualiza banco de desenvolvimento
+$ npx prisma migrate dev 
+
+# Rodar em ambiente de Prod ou Test
+$ npx prisma migrate deploy
+```
