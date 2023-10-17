@@ -10,7 +10,7 @@ datasource db {
 model Client {
   id    String @id @default(uuid())
   name  String
-  cpf   String
+  cpf   String @unique
   email String @unique
 
   @@map("clients")

@@ -15,12 +15,12 @@ type CreateClientBodySchema = z.infer<typeof createClientBodySchema>
 
 @Controller('client')
 export class CreateClientController {
-  constructor(private readonly crateClient: CreateClient) {}
+  constructor(private readonly createClient: CreateClient) {}
 
   @Post()
   async handler(@Body(bodyValidationPipe) body: CreateClientBodySchema) {
     const { name, cpf, email } = body
-    const { client } = await this.crateClient.execute({ name, cpf, email })
+    const { client } = await this.createClient.execute({ name, cpf, email })
     return ClientPresenter.toHttp(client)
   }
 }
