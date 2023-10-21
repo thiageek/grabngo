@@ -16,6 +16,8 @@ export interface OutputCreate {
 export class CreateClient {
   constructor(private readonly repository: ClientRepository) {}
   async execute({ name, email, cpf }: InputCreate): Promise<OutputCreate> {
+    const clientExist = await this.repository.find(cpf)
+    if (clientExist) throw new Error('Client already exists')
     const client = Client.create({
       name,
       cpf,
