@@ -1,12 +1,20 @@
 import { CreateClient } from '@/domain/application/use-cases/create-client'
 import { ZodValidationPipe } from '@/infra/pipes/zod-validation-pipe'
-import { Body, Controller, Post } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Post,
+  Logger,
+  InternalServerErrorException,
+  BadRequestException,
+} from '@nestjs/common'
 import { z } from 'zod'
 import { ClientPresenter } from '../presenters/client-presenter'
+import { ResourceAlreadyExists } from '@/core/errors/resource-already-exists.error'
 
 const createClientBodySchema = z.object({
   name: z.string(),
-  email: z.string().email(),
+  email: z.string(),
   cpf: z.string(),
 })
 
@@ -15,12 +23,21 @@ type CreateClientBodySchema = z.infer<typeof createClientBodySchema>
 
 @Controller('client')
 export class CreateClientController {
+  logger = new Logger(CreateClientController.name)
   constructor(private readonly createClient: CreateClient) {}
 
   @Post()
   async handler(@Body(bodyValidationPipe) body: CreateClientBodySchema) {
-    const { name, cpf, email } = body
-    const { client } = await this.createClient.execute({ name, cpf, email })
-    return ClientPresenter.toHttp(client)
+    try {
+      this.logger.log(`New request received path /client`)
+      const { name, cpf, email } = body
+      const { client } = await this.createClient.execute({ name, cpf, email })
+      return ClientPresenter.toHttp(client)
+    } catch (error: any) {
+      if (error instanceof ResourceAlreadyExists)
+        throw new BadRequestException(error.message)
+      this.logger.error(error)
+      throw new InternalServerErrorException(error.message)
+    }
   }
 }
