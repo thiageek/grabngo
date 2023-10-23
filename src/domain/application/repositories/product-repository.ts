@@ -1,4 +1,4 @@
-import { Product } from "@/domain/enterprise/entities/product"
+import { Product } from '@/domain/enterprise/entities/product'
 
 export abstract class ProductRepository {
   abstract save(data: Product): Promise<void>
