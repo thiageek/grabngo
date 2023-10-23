@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common'
 import { Product } from '@/domain/enterprise/entities/product'
 import { ProductRepository } from '@/domain/application/repositories/product-repository'
 
-export interface InputProduct {
+export interface InputCreateProduct {
   name: string
   price: number
   description: string
 }
 
-export interface OutputProduct {
+export interface OutputCreateProduct {
   product: Product
 }
 
@@ -20,7 +20,7 @@ export class CreateProduct {
     name,
     price,
     description,
-  }: InputProduct): Promise<OutputProduct> {
+  }: InputCreateProduct): Promise<OutputCreateProduct> {
     const product = Product.create({
       name,
       price,

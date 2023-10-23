@@ -16,7 +16,6 @@ export class Product extends Entity<ProductProps> {
       id,
     )
   }
-
   get name() {
     return this.props.name
   }

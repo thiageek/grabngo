@@ -10,7 +10,8 @@ import { PrismaClientRepository } from './infra/app/repositories/prisma/prisma-c
 import { DataModule } from './infra/providers/database/database.module'
 import { ProductRepository } from '@/domain/application/repositories/product-repository'
 import { PrismaProductRepository } from '@/infra/app/repositories/prisma/prisma-product-repository'
-import { CreateProduct } from '@/domain/application/use-cases/create-product'
+import { CreateProduct } from 'src/domain/application/use-cases/create-product'
+import { UpdateProduct } from "@/domain/application/use-cases/update-product"
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { CreateProduct } from '@/domain/application/use-cases/create-product'
       useClass: PrismaProductRepository,
     },
     CreateProduct,
+    UpdateProduct,
   ],
 })
 export class AppModule {}

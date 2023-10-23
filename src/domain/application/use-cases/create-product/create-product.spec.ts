@@ -1,4 +1,4 @@
-import { CreateProduct } from '.'
+import { CreateProduct } from './index'
 import { MockProductRepository } from '@/infra/app/repositories/in-memory/mock-product-repository'
 
 let sut: CreateProduct
