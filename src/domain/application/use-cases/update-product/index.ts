@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common'
+import { isEmpty, isNil } from "@nestjs/common/utils/shared.utils"
 import { ProductRepository } from '@/domain/application/repositories/product-repository'
 import { Product } from '@/domain/enterprise/entities/product'
 
 export interface InputUpdateProduct {
   id: string
-  name: string
-  price: number
-  description: string
+  name?: string
+  price?: number
+  description?: string
 }
 
 export interface OutputUpdateProduct {
@@ -23,14 +24,21 @@ export class UpdateProduct {
     price,
     description,
   }: InputUpdateProduct): Promise<OutputUpdateProduct> {
-    const products = await this.repository.find(id)
+    const product = await this.repository.find(id)
 
-    if (products?.length !== 1) throw new Error('product not found')
+    if (isNil(product)) throw new Error('product not found')
 
-    const product = Product.create({ name, price, description }, products[0].id)
+    const updatedProduct = Product.create(
+      {
+        name: name ?? product.name,
+        price: price ?? product.price,
+        description: description ?? product.description,
+      },
+      product!.id,
+    )
 
-    await this.repository.save(product)
+    await this.repository.save(updatedProduct)
 
-    return { product }
+    return { product: updatedProduct }
   }
 }

@@ -18,14 +18,27 @@ describe('Update product', () => {
   })
 
   it('Should be able to update a product', async () => {
-    await sut.execute({
+    const updatedProduct = {
       id: product.id.toString(),
       name: 'Product New Name',
       price: 42,
       description: 'Product new description',
-    })
+    }
 
-    const spy = await repository.find('Product New Name')
-    expect(spy).toBeTruthy()
+    await sut.execute(updatedProduct)
+
+    const spy = await repository.fetch({ q: 'Product New Name' })
+    expect(spy).toHaveLength(1)
+    expect(spy[0]).toHaveProperty('props', {
+      description: updatedProduct.description,
+      name: updatedProduct.name,
+      price: updatedProduct.price,
+    })
+  })
+
+  it('Should throw an error for not found product update attempt', async () => {
+    expect(async () => {
+      return await sut.execute({ id: 'invalid-id' })
+    }).rejects.toThrow('product not found')
   })
 })

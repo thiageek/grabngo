@@ -22,7 +22,13 @@ describe('Delete product', () => {
       id: product.id.toString(),
     })
 
-    const spy = await repository.find('Product Name')
+    const spy = await repository.fetch({ q: 'Product Name' })
     expect(spy).toHaveLength(0)
+  })
+
+  it('Should throw an error for not found product delete attempt', async () => {
+    expect(async () => {
+      return await sut.execute({ id: 'invalid-id' })
+    }).rejects.toThrow('product not found')
   })
 })

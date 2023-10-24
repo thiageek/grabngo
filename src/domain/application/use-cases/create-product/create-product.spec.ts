@@ -1,5 +1,6 @@
 import { CreateProduct } from './index'
 import { MockProductRepository } from '@/infra/app/repositories/in-memory/mock-product-repository'
+import { Product } from "@/domain/enterprise/entities/product"
 
 let sut: CreateProduct
 let repository: MockProductRepository
@@ -10,13 +11,16 @@ describe('Create product', () => {
   })
 
   it('Should be able to create a product', async () => {
-    await sut.execute({
+    const product = {
       name: 'Product Name',
       price: 14.99,
       description: 'Product description',
-    })
+    }
 
-    const spy = await repository.find('Product Name')
-    expect(spy).toBeTruthy()
+    await sut.execute(product)
+
+    const spy = await repository.fetch({ q: 'Product Name' })
+    expect(spy).toHaveLength(1)
+    expect(spy[0]).toHaveProperty('props', product)
   })
 })
