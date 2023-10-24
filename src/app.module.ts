@@ -11,7 +11,10 @@ import { DataModule } from './infra/providers/database/database.module'
 import { ProductRepository } from '@/domain/application/repositories/product-repository'
 import { PrismaProductRepository } from '@/infra/app/repositories/prisma/prisma-product-repository'
 import { CreateProduct } from 'src/domain/application/use-cases/create-product'
-import { UpdateProduct } from "@/domain/application/use-cases/update-product"
+import { UpdateProduct } from '@/domain/application/use-cases/update-product'
+import { UpdateProductController } from '@/infra/app/controllers/http/update-product.controller'
+import { DeleteProductController } from '@/infra/app/controllers/http/delete-product.controller'
+import { DeleteProduct } from '@/domain/application/use-cases/delete-product'
 
 @Module({
   imports: [
@@ -22,7 +25,12 @@ import { UpdateProduct } from "@/domain/application/use-cases/update-product"
     EnvModule,
     DataModule,
   ],
-  controllers: [CreateClientController, CreateProductController],
+  controllers: [
+    CreateClientController,
+    CreateProductController,
+    UpdateProductController,
+    DeleteProductController,
+  ],
   providers: [
     {
       provide: ClientRepository,
@@ -35,6 +43,7 @@ import { UpdateProduct } from "@/domain/application/use-cases/update-product"
     },
     CreateProduct,
     UpdateProduct,
+    DeleteProduct,
   ],
 })
 export class AppModule {}

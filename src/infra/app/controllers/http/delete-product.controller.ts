@@ -1,22 +1,12 @@
-import { Body, Controller, Delete } from "@nestjs/common"
+import { Controller, Delete, Param } from '@nestjs/common'
 import { DeleteProduct } from '@/domain/application/use-cases/delete-product'
-import { z } from 'zod'
-import { ZodValidationPipe } from '@/infra/pipes/zod-validation-pipe'
 
-const deleteProductBodySchema = z.object({
-  id: z.string(),
-})
-
-const bodyValidationPipe = new ZodValidationPipe(deleteProductBodySchema)
-type DeleteProductBodySchema = z.infer<typeof deleteProductBodySchema>
-
-@Controller('product')
+@Controller('product/:id')
 export class DeleteProductController {
   constructor(private readonly deleteProduct: DeleteProduct) {}
 
   @Delete()
-  async handler(@Body(bodyValidationPipe) body: DeleteProductBodySchema) {
-    const { id } = body
+  async handler(@Param('id') id: string) {
     await this.deleteProduct.execute({ id })
     return { id }
   }
