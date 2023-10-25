@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { INestApplication } from '@nestjs/common'
 import * as request from 'supertest'
-import { AppModule } from './../src/app.module'
+import { AppModule } from '@/app.module'
+import { PrismaService } from '@/infra/providers/database/prisma/prisma.service'
 
-describe('AppController (e2e)', () => {
+describe('CreateClientController', () => {
   let app: INestApplication
 
   beforeEach(async () => {
@@ -15,10 +16,19 @@ describe('AppController (e2e)', () => {
     await app.init()
   })
 
-  it('/ (GET)', () => {
+  afterEach(async () => {
+    const bd = app.get(PrismaService)
+    await bd.client.deleteMany({})
+  })
+
+  it('/ (POST)', () => {
     return request(app.getHttpServer())
       .post('/client')
-      .send({ name: 'John Doe', email: 'johndoe@example.com' })
+      .send({
+        cpf: '123.456.789.10',
+        name: 'John Doe',
+        email: 'johndoe@example.com',
+      })
       .expect(201)
   })
 })
