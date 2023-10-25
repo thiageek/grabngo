@@ -18,6 +18,6 @@ export class MockProductRepository implements ProductRepository {
     }
   }
   async fetch(params: PaginationParams): Promise<Product[]> {
-    return this.mockProducts.filter((f) => f.name.includes(params.q ?? ''))
+    return this.mockProducts.filter((f) => f.name.includes(params.query ?? ''))
   }
 }

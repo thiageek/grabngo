@@ -55,7 +55,7 @@ export class PrismaProductRepository implements ProductRepository {
     const raw = await this.prisma.product.findMany({
       where: {
         name: {
-          contains: params.q,
+          contains: params.query,
         },
       },
     })

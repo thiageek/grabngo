@@ -27,7 +27,7 @@ describe('Update product', () => {
 
     await sut.execute(updatedProduct)
 
-    const spy = await repository.fetch({ q: 'Product New Name' })
+    const spy = await repository.fetch({ query: 'Product New Name' })
     expect(spy).toHaveLength(1)
     expect(spy[0]).toHaveProperty('props', {
       description: updatedProduct.description,

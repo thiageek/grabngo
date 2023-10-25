@@ -3,5 +3,5 @@ export interface PaginationParams {
   perPage?: number
   orderBy?: string
   order?: string
-  q?: string
+  query?: string
 }
