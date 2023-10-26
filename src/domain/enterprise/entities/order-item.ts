@@ -2,19 +2,19 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/helpers/optional'
 
-export interface BagItemProps {
+export interface OrderItemProps {
   productId: UniqueEntityId
   quantity: number
   observation?: string
   createdAt: Date
   updatedAt?: Date
 }
-export class BagItem extends Entity<BagItemProps> {
+export class OrderItem extends Entity<OrderItemProps> {
   static create(
-    props: Optional<BagItemProps, 'quantity' | 'createdAt'>,
+    props: Optional<OrderItemProps, 'quantity' | 'createdAt'>,
     id?: UniqueEntityId,
   ) {
-    return new BagItem(
+    return new OrderItem(
       {
         ...props,
         quantity: props.quantity ?? 1,
