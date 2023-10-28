@@ -17,4 +17,11 @@ export class MockOrderRepository implements OrderRepository {
     const result = this.orders.find((order) => order.id.toValue() === filter)
     return result ?? null
   }
+
+  async removeItem(id: string): Promise<void> {
+    const itemIndex = this.orderItemList.findIndex(
+      (orderItem) => orderItem.id.toString() == id,
+    )
+    await this.orderItemList.splice(itemIndex, 1)
+  }
 }

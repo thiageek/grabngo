@@ -4,7 +4,7 @@ import { OrderItem } from '@/domain/enterprise/entities/order-item'
 type input = {
   id?: string
   productId: string
-  quantity: number
+  quantity?: number
   observation?: string
 }
 /**
