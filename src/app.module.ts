@@ -15,6 +15,10 @@ import { UpdateProduct } from '@/domain/application/use-cases/update-product'
 import { UpdateProductController } from '@/infra/app/controllers/http/update-product.controller'
 import { DeleteProductController } from '@/infra/app/controllers/http/delete-product.controller'
 import { DeleteProduct } from '@/domain/application/use-cases/delete-product'
+import { OrderRepository } from './domain/application/repositories/order-repository'
+import { PrismaOrderRepository } from './infra/app/repositories/prisma/prisma-order-repository'
+import { CreateOrder } from './domain/application/use-cases/create-order'
+import { CreateOrderController } from './infra/app/controllers/http/create-order.controller'
 
 @Module({
   imports: [
@@ -30,17 +34,23 @@ import { DeleteProduct } from '@/domain/application/use-cases/delete-product'
     CreateProductController,
     UpdateProductController,
     DeleteProductController,
+    CreateOrderController,
   ],
   providers: [
     {
       provide: ClientRepository,
       useClass: PrismaClientRepository,
     },
-    CreateClient,
     {
       provide: ProductRepository,
       useClass: PrismaProductRepository,
     },
+    {
+      provide: OrderRepository,
+      useClass: PrismaOrderRepository,
+    },
+    CreateOrder,
+    CreateClient,
     CreateProduct,
     UpdateProduct,
     DeleteProduct,
