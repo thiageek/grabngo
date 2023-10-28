@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Order } from '@/domain/enterprise/entities/order'
-import { orderItemsFactory } from '../../factories/order-itens-factory'
+import { orderItemsFactory } from '../../factories/order-items-factory'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { OrderRepository } from '../../repositories/order-repository'
 
