@@ -3,9 +3,11 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/helpers/optional'
 import { Status } from './value-objects/status'
 import { OrderItem } from './order-item'
+import { randomInt } from 'crypto'
 
 export interface OrderProps {
-  clientId?: UniqueEntityId
+  orderNumber: number
+  clientId?: UniqueEntityId | null
   items: OrderItem[]
   status: Status
   createdAt: Date
@@ -13,17 +15,22 @@ export interface OrderProps {
 }
 export class Order extends Entity<OrderProps> {
   static create(
-    props: Optional<OrderProps, 'status' | 'createdAt'>,
+    props: Optional<OrderProps, 'orderNumber' | 'status' | 'createdAt'>,
     id?: UniqueEntityId,
   ) {
     return new Order(
       {
         ...props,
+        orderNumber: props.orderNumber ?? new Date().getTime() + randomInt(+3),
         status: props.status ?? new Status('done'),
         createdAt: props.createdAt ?? new Date(),
       },
       id,
     )
+  }
+
+  get orderNumber() {
+    return this.props.orderNumber
   }
 
   get status() {

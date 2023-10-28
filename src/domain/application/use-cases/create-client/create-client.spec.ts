@@ -1,4 +1,4 @@
-import { MockClientRepository } from '@/infra/app/repositories/in-memory/mock-client-repository'
+import { MockClientRepository } from '@test/repositories/mock-client-repository'
 import { CreateClient } from '.'
 import { ResourceAlreadyExists } from '@/core/errors/resource-already-exists.error'
 
