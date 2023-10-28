@@ -19,6 +19,8 @@ import { OrderRepository } from './domain/application/repositories/order-reposit
 import { PrismaOrderRepository } from './infra/app/repositories/prisma/prisma-order-repository'
 import { CreateOrder } from './domain/application/use-cases/create-order'
 import { CreateOrderController } from './infra/app/controllers/http/create-order.controller'
+import { FetchOrdersController } from './infra/app/controllers/http/feth-orders.controller'
+import { FetchOrder } from './domain/application/use-cases/fetch-order'
 
 @Module({
   imports: [
@@ -35,6 +37,7 @@ import { CreateOrderController } from './infra/app/controllers/http/create-order
     UpdateProductController,
     DeleteProductController,
     CreateOrderController,
+    FetchOrdersController,
   ],
   providers: [
     {
@@ -49,11 +52,13 @@ import { CreateOrderController } from './infra/app/controllers/http/create-order
       provide: OrderRepository,
       useClass: PrismaOrderRepository,
     },
-    CreateOrder,
+
     CreateClient,
     CreateProduct,
     UpdateProduct,
     DeleteProduct,
+    CreateOrder,
+    FetchOrder,
   ],
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
 import { Order } from '@/domain/enterprise/entities/order'
-import { OrderItemPresenter } from './order-presenter copy'
+import { OrderItemPresenter } from './order-item-presenter'
 
 export class OrderPresenter {
   static toHttp(data: Order) {

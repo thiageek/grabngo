@@ -11,7 +11,7 @@ export interface Output {
 }
 
 @Injectable()
-export class FetchOrders {
+export class FetchOrder {
   constructor(private readonly repository: OrderRepository) {}
   async execute({ page }: Input): Promise<Output> {
     const orders = await this.repository.fetchOrder({ page })
