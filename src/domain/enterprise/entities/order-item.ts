@@ -5,9 +5,9 @@ import { Optional } from '@/core/helpers/optional'
 export interface OrderItemProps {
   productId: UniqueEntityId
   quantity: number
-  observation?: string
+  observation?: string | null
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 export class OrderItem extends Entity<OrderItemProps> {
   static create(
@@ -37,13 +37,17 @@ export class OrderItem extends Entity<OrderItemProps> {
     this.touch()
   }
 
-  get observation(): string | undefined {
+  get observation(): string | undefined | null {
     return this.props.observation
   }
 
   set observation(value: string | undefined) {
     this.props.observation = value
     this.touch()
+  }
+
+  get createdAt() {
+    return this.props.createdAt
   }
   get updatedAt() {
     return this.props.updatedAt

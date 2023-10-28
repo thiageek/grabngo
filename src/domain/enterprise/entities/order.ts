@@ -11,7 +11,7 @@ export interface OrderProps {
   items: OrderItem[]
   status: Status
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 export class Order extends Entity<OrderProps> {
   static create(
@@ -21,7 +21,7 @@ export class Order extends Entity<OrderProps> {
     return new Order(
       {
         ...props,
-        orderNumber: props.orderNumber ?? new Date().getTime() + randomInt(+3),
+        orderNumber: props.orderNumber ?? randomInt(99) * 10,
         status: props.status ?? new Status('done'),
         createdAt: props.createdAt ?? new Date(),
       },
@@ -42,8 +42,16 @@ export class Order extends Entity<OrderProps> {
     this.touch()
   }
 
+  get clientId() {
+    return this.props.clientId
+  }
+
   get items() {
     return this.props.items
+  }
+
+  get createdAt() {
+    return this.props.createdAt
   }
 
   get updatedAt() {
