@@ -12,7 +12,8 @@ model Client {
   name  String
   cpf   String @unique
   email String @unique
-  Item  Item[]
+
+  Order Order[]
 
   @@map("clients")
 }
@@ -65,6 +66,8 @@ enum MediaType {
 
 model Order {
   id          String    @id @default(uuid())
+  client      Client?   @relation(fields: [clientId], references: [id])
+  clientId    String?
   orderNumber Int
   status      String
   createdAt   DateTime
@@ -80,8 +83,6 @@ model Item {
   product     Product   @relation(fields: [productId], references: [id])
   order       Order     @relation(fields: [orderId], references: [id])
   orderId     String
-  client      Client?   @relation(fields: [clientId], references: [id])
-  clientId    String?
   quantity    Int       @default(1)
   observation String?
   createdAt   DateTime
