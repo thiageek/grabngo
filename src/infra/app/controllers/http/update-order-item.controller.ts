@@ -12,6 +12,13 @@ import { z } from 'zod'
 import { ResourceAlreadyExists } from '@/core/errors/resource-already-exists.error'
 import { OrderPresenter } from '../presenters/order-presenter'
 import { UpdateOrderItem } from '@/domain/application/use-cases/update-order-item'
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiOkResponse,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger'
 
 const updateOrderItemBodySchema = z.object({
   item: z.object({
@@ -24,11 +31,26 @@ const updateOrderItemBodySchema = z.object({
 const bodyValidationPipe = new ZodValidationPipe(updateOrderItemBodySchema)
 type UpdateOrderItemBodySchema = z.infer<typeof updateOrderItemBodySchema>
 
+@ApiTags('Order')
 @Controller('order/:orderId/item/:id')
 export class UpdateOrderItemController {
   logger = new Logger(UpdateOrderItemController.name)
   constructor(private readonly updateOrderItem: UpdateOrderItem) {}
 
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        productId: { type: 'string' },
+        quantity: { type: 'number' },
+        observation: { type: 'string' },
+      },
+    },
+  })
+  @ApiParam({ name: 'orderId', description: 'Order id' })
+  @ApiParam({ name: 'id', description: 'Order item id' })
+  @ApiOkResponse({ description: 'Success' })
+  @ApiBadRequestResponse({ description: 'Bad request' })
   @Put()
   async handler(
     @Param('orderId') orderId: string,

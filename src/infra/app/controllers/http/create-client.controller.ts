@@ -11,6 +11,12 @@ import {
 import { z } from 'zod'
 import { ClientPresenter } from '../presenters/client-presenter'
 import { ResourceAlreadyExists } from '@/core/errors/resource-already-exists.error'
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 
 const createClientBodySchema = z.object({
   name: z.string(),
@@ -19,13 +25,27 @@ const createClientBodySchema = z.object({
 })
 
 const bodyValidationPipe = new ZodValidationPipe(createClientBodySchema)
+
 type CreateClientBodySchema = z.infer<typeof createClientBodySchema>
 
+@ApiTags('Client')
 @Controller('client')
 export class CreateClientController {
   logger = new Logger(CreateClientController.name)
   constructor(private readonly createClient: CreateClient) {}
 
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        email: { type: 'string' },
+        cpf: { type: 'string' },
+      },
+    },
+  })
+  @ApiCreatedResponse({ description: 'Created' })
+  @ApiBadRequestResponse({ description: 'Bad request' })
   @Post()
   async handler(@Body(bodyValidationPipe) body: CreateClientBodySchema) {
     try {

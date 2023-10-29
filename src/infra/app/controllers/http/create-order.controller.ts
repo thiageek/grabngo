@@ -11,6 +11,12 @@ import { z } from 'zod'
 import { ResourceAlreadyExists } from '@/core/errors/resource-already-exists.error'
 import { CreateOrder } from '@/domain/application/use-cases/create-order'
 import { OrderPresenter } from '../presenters/order-presenter'
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 
 const createOrderBodySchema = z.object({
   clientId: z.string().optional(),
@@ -26,11 +32,33 @@ const createOrderBodySchema = z.object({
 const bodyValidationPipe = new ZodValidationPipe(createOrderBodySchema)
 type CreateOrderBodySchema = z.infer<typeof createOrderBodySchema>
 
+@ApiTags('Order')
 @Controller('order')
 export class CreateOrderController {
   logger = new Logger(CreateOrderController.name)
   constructor(private readonly createOrder: CreateOrder) {}
 
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        clientId: { type: 'string' },
+        items: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              productId: { type: 'string' },
+              quantity: { type: 'number', minimum: 1 },
+              observation: { type: 'string' },
+            },
+          },
+        },
+      },
+    },
+  })
+  @ApiCreatedResponse({ description: 'Created' })
+  @ApiBadRequestResponse({ description: 'Bad request' })
   @Post()
   async handler(@Body(bodyValidationPipe) body: CreateOrderBodySchema) {
     try {
