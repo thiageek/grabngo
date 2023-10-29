@@ -7,6 +7,7 @@ import {
   BadRequestException,
   Put,
   Param,
+  UseGuards,
 } from '@nestjs/common'
 import { z } from 'zod'
 import { ResourceAlreadyExists } from '@/core/errors/resource-already-exists.error'
@@ -14,11 +15,13 @@ import { OrderPresenter } from '../presenters/order-presenter'
 import { UpdateOrder } from '@/domain/application/use-cases/update-order'
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiOkResponse,
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger'
+import { JwtGuard } from '@/infra/providers/auth/guards'
 
 const updateOrderBodySchema = z.object({
   status: z.string(),
@@ -28,6 +31,8 @@ const bodyValidationPipe = new ZodValidationPipe(updateOrderBodySchema)
 type UpdateOrderBodySchema = z.infer<typeof updateOrderBodySchema>
 
 @ApiTags('Order')
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
 @Controller('order/:id')
 export class UpdateOrderController {
   logger = new Logger(UpdateOrderController.name)

@@ -22,6 +22,6 @@ export class MockOrderRepository implements OrderRepository {
     const itemIndex = this.orderItemList.findIndex(
       (orderItem) => orderItem.id.toString() == id,
     )
-    await this.orderItemList.splice(itemIndex, 1)
+    this.orderItemList.splice(itemIndex, 1)
   }
 }

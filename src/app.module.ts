@@ -31,6 +31,10 @@ import { Checkout } from './domain/application/use-cases/checkout'
 import { UpdateOrderItemController } from './infra/app/controllers/http/update-order-item.controller'
 import { DeleteOrderItemController } from './infra/app/controllers/http/delete-order-item.controller'
 import { CheckoutController } from './infra/app/controllers/http/checkout.controller'
+import { AuthModule } from './infra/providers/auth/auth.module'
+import { SigUpController } from './infra/app/controllers/http/sig-up.controller'
+import { CreateUser } from './domain/application/use-cases/create-user'
+import { SigInController } from './infra/app/controllers/http/sig-in.controller'
 
 @Module({
   imports: [
@@ -40,6 +44,7 @@ import { CheckoutController } from './infra/app/controllers/http/checkout.contro
     }),
     EnvModule,
     DataModule,
+    AuthModule,
   ],
   controllers: [
     CreateClientController,
@@ -53,6 +58,8 @@ import { CheckoutController } from './infra/app/controllers/http/checkout.contro
     UpdateOrderItemController,
     DeleteOrderItemController,
     CheckoutController,
+    SigUpController,
+    SigInController,
   ],
   providers: [
     {
@@ -79,6 +86,7 @@ import { CheckoutController } from './infra/app/controllers/http/checkout.contro
     UpdateOrderItem,
     DeleteOrderItem,
     Checkout,
+    CreateUser,
   ],
 })
 export class AppModule {}

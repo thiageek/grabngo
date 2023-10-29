@@ -90,3 +90,16 @@ model Item {
 
   @@map("items")
 }
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  login     String    @unique()
+  password  String
+  profile   Int
+  enabled   Boolean   @default(true)
+  createdAt DateTime
+  updatedAt DateTime?
+
+  @@map("users")
+}

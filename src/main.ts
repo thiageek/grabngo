@@ -10,6 +10,7 @@ async function bootstrap() {
   const port = configService.get('PORT')
   const config = new DocumentBuilder()
     .setTitle('Grabngo')
+    .addBearerAuth()
     .setDescription('The Grabngo API')
     .setVersion(configService.get('VERSION'))
     .build()
