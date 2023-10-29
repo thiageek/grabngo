@@ -14,7 +14,7 @@ async function bootstrap() {
     .setVersion(configService.get('VERSION'))
     .build()
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api', app, document)
+  SwaggerModule.setup(`api/${configService.get('VERSION')}/docs`, app, document)
 
   await app.listen(port)
 }
