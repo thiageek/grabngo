@@ -12,6 +12,7 @@ export interface Input {
 interface InputOrderItem {
   id: string
   productId: string
+  quantity?: number
   observation?: string
 }
 

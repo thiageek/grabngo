@@ -21,6 +21,16 @@ import { CreateOrder } from './domain/application/use-cases/create-order'
 import { CreateOrderController } from './infra/app/controllers/http/create-order.controller'
 import { FetchOrdersController } from './infra/app/controllers/http/feth-orders.controller'
 import { FetchOrder } from './domain/application/use-cases/fetch-order'
+import { UpdateOrderController } from './infra/app/controllers/http/update-order.controller'
+import { UpdateOrder } from './domain/application/use-cases/update-order'
+import { CreateOrderItemController } from './infra/app/controllers/http/create-order-item.controller'
+import { AddOrderItem } from './domain/application/use-cases/add-order-item'
+import { UpdateOrderItem } from './domain/application/use-cases/update-order-item'
+import { DeleteOrderItem } from './domain/application/use-cases/delete-order-item'
+import { Checkout } from './domain/application/use-cases/checkout'
+import { UpdateOrderItemController } from './infra/app/controllers/http/update-order-item.controller'
+import { DeleteOrderItemController } from './infra/app/controllers/http/delete-order-item.controller'
+import { CheckoutController } from './infra/app/controllers/http/checkout.controller'
 
 @Module({
   imports: [
@@ -38,6 +48,11 @@ import { FetchOrder } from './domain/application/use-cases/fetch-order'
     DeleteProductController,
     CreateOrderController,
     FetchOrdersController,
+    UpdateOrderController,
+    CreateOrderItemController,
+    UpdateOrderItemController,
+    DeleteOrderItemController,
+    CheckoutController,
   ],
   providers: [
     {
@@ -59,6 +74,11 @@ import { FetchOrder } from './domain/application/use-cases/fetch-order'
     DeleteProduct,
     CreateOrder,
     FetchOrder,
+    UpdateOrder,
+    AddOrderItem,
+    UpdateOrderItem,
+    DeleteOrderItem,
+    Checkout,
   ],
 })
 export class AppModule {}
