@@ -1,6 +1,6 @@
-import { ProductRepository } from "@/domain/application/repositories/product-repository"
-import { Product } from "@/domain/enterprise/entities/product"
-import { PaginationParams } from "@/core/repositories/pagination-params"
+import { ProductRepository } from '@/domain/application/repositories/product-repository'
+import { Product } from '@/domain/enterprise/entities/product'
+import { PaginationParams } from '@/core/repositories/pagination-params'
 
 export class MockProductRepository implements ProductRepository {
   mockProducts: Product[] = []

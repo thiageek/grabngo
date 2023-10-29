@@ -9,6 +9,7 @@ import { OrderItemMapper } from './mappers/order-item-mapper'
 @Injectable()
 export class PrismaOrderRepository implements OrderRepository {
   constructor(private readonly prisma: PrismaService) {}
+
   async saveOrder(data: Order): Promise<void> {
     try {
       const raw = OrderMapper.toPrisma(data)
@@ -66,5 +67,15 @@ export class PrismaOrderRepository implements OrderRepository {
         items: i.Item,
       }),
     )
+  }
+
+  async removeItem(id: string): Promise<void> {
+    try {
+      await this.prisma.item.delete({
+        where: { id },
+      })
+    } catch (e) {
+      throw new Error(`failed to remove item: ${e}`)
+    }
   }
 }
