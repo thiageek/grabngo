@@ -1,6 +1,5 @@
 import { CreateProduct } from './index'
 import { MockProductRepository } from '@/infra/app/repositories/in-memory/mock-product-repository'
-import { Product } from "@/domain/enterprise/entities/product"
 
 let sut: CreateProduct
 let repository: MockProductRepository
@@ -19,7 +18,7 @@ describe('Create product', () => {
 
     await sut.execute(product)
 
-    const spy = await repository.fetch({ query: 'Product Name' })
+    const spy = await repository.fetch({ page: 1, query: 'Product Name' })
     expect(spy).toHaveLength(1)
     expect(spy[0]).toHaveProperty('props', product)
   })

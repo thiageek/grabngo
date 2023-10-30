@@ -13,43 +13,46 @@ model Client {
   cpf   String @unique
   email String @unique
 
+  Order Order[]
+
   @@map("clients")
 }
 
 model Product {
-  id String @id @default(uuid())
-  name String @unique
+  id          String              @id @default(uuid())
+  name        String              @unique
   description String
-  price Float
-  mediaItems Media[]
-  categories ProductCategories[]
+  price       Float
+  mediaItems  Media[]
+  categories  ProductCategories[]
+  Item        Item[]
 
   @@map("products")
 }
 
 model Category {
-  id  String @id @default(uuid())
-  name String @unique
+  id       String              @id @default(uuid())
+  name     String              @unique
   products ProductCategories[]
 
   @@map("categories")
 }
 
 model ProductCategories {
-  id String @id @default(uuid())
-  productId String
-  product Product @relation(fields: [productId], references: [id])
+  id         String   @id @default(uuid())
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id])
   categoryId String
-  category Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
 }
 
 model Media {
-  id String @id @default(uuid())
-  name String
-  url String @unique
+  id        String    @id @default(uuid())
+  name      String
+  url       String    @unique
   productId String
-  product Product @relation(fields: [productId], references: [id])
-  featured Boolean
+  product   Product   @relation(fields: [productId], references: [id])
+  featured  Boolean
   mediaType MediaType
 
   @@map("images")
@@ -59,4 +62,44 @@ enum MediaType {
   IMAGE
   PDF
   VIDEO
+}
+
+model Order {
+  id          String    @id @default(uuid())
+  client      Client?   @relation(fields: [clientId], references: [id])
+  clientId    String?
+  orderNumber Int
+  status      String
+  createdAt   DateTime
+  updatedAt   DateTime?
+  Item        Item[]
+
+  @@map("orders")
+}
+
+model Item {
+  id          String    @id @default(uuid())
+  productId   String
+  product     Product   @relation(fields: [productId], references: [id])
+  order       Order     @relation(fields: [orderId], references: [id])
+  orderId     String
+  quantity    Int       @default(1)
+  observation String?
+  createdAt   DateTime
+  updatedAt   DateTime?
+
+  @@map("items")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  login     String    @unique()
+  password  String
+  profile   Int
+  enabled   Boolean   @default(true)
+  createdAt DateTime
+  updatedAt DateTime?
+
+  @@map("users")
 }

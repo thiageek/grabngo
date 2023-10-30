@@ -22,7 +22,7 @@ describe('Delete product', () => {
       id: product.id.toString(),
     })
 
-    const spy = await repository.fetch({ query: 'Product Name' })
+    const spy = await repository.fetch({ page: 1, query: 'Product Name' })
     expect(spy).toHaveLength(0)
   })
 

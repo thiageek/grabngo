@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common'
-import { isEmpty } from '@nestjs/common/utils/shared.utils'
 import { PrismaService } from '@/infra/providers/database/prisma/prisma.service'
 import { Product } from '@/domain/enterprise/entities/product'
 import { ProductMapper } from '@/infra/app/repositories/prisma/mappers/product-mapper'
 import { ProductRepository } from '@/domain/application/repositories/product-repository'
-import { PaginationParams } from "@/core/repositories/pagination-params"
+import { PaginationParams } from '@/core/repositories/pagination-params'
 
 @Injectable()
 export class PrismaProductRepository implements ProductRepository {
