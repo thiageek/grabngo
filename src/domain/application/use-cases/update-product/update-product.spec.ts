@@ -13,6 +13,7 @@ describe('Update product', () => {
       name: 'Product Name',
       price: 14.99,
       description: 'Product description',
+      categories: ['Category 1'],
     })
     repository.mockProducts.push(product)
   })
@@ -23,6 +24,7 @@ describe('Update product', () => {
       name: 'Product New Name',
       price: 42,
       description: 'Product new description',
+      categories: ['Category 2', 'Category 3'],
     }
 
     await sut.execute(updatedProduct)
@@ -33,6 +35,7 @@ describe('Update product', () => {
       description: updatedProduct.description,
       name: updatedProduct.name,
       price: updatedProduct.price,
+      categories: updatedProduct.categories,
     })
   })
 

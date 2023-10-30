@@ -37,6 +37,8 @@ import { SigInController } from './infra/app/controllers/http/sig-in.controller'
 import { APP_INTERCEPTOR } from '@nestjs/core'
 import { LoggingInterceptor } from './infra/interceptors/loggin.interceptor'
 import { CreateProduct } from './domain/application/use-cases/create-product'
+import { FetchProductsController } from '@/infra/app/controllers/http/fetch-products.controller'
+import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
 
 @Module({
   imports: [
@@ -62,6 +64,7 @@ import { CreateProduct } from './domain/application/use-cases/create-product'
     CheckoutController,
     SigUpController,
     SigInController,
+    FetchProductsController,
   ],
   providers: [
     {
@@ -89,6 +92,7 @@ import { CreateProduct } from './domain/application/use-cases/create-product'
     DeleteOrderItem,
     Checkout,
     CreateUser,
+    FetchProducts,
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,

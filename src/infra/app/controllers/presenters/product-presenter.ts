@@ -7,6 +7,7 @@ export class ProductPresenter {
       name: product.name,
       price: product.price,
       description: product.description,
+      categories: product.categories,
     }
   }
 }

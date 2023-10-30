@@ -15,6 +15,7 @@ const updateProductBodySchema = z.object({
   name: z.string(),
   price: z.number(),
   description: z.string(),
+  categories: z.array(z.string()).optional(),
 })
 
 const bodyValidationPipe = new ZodValidationPipe(updateProductBodySchema)
@@ -43,12 +44,13 @@ export class UpdateProductController {
     @Body(bodyValidationPipe) body: UpdateProductBodySchema,
     @Param('id') id: string,
   ) {
-    const { name, price, description } = body
+    const { name, price, description, categories } = body
     const { product } = await this.updateProduct.execute({
       id,
       name,
       price,
       description,
+      categories,
     })
     return ProductPresenter.toHttp(product)
   }
