@@ -10,7 +10,6 @@ import { PrismaClientRepository } from './infra/app/repositories/prisma/prisma-c
 import { DataModule } from './infra/providers/database/database.module'
 import { ProductRepository } from '@/domain/application/repositories/product-repository'
 import { PrismaProductRepository } from '@/infra/app/repositories/prisma/prisma-product-repository'
-import { CreateProduct } from 'src/domain/application/use-cases/create-product'
 import { UpdateProduct } from '@/domain/application/use-cases/update-product'
 import { UpdateProductController } from '@/infra/app/controllers/http/update-product.controller'
 import { DeleteProductController } from '@/infra/app/controllers/http/delete-product.controller'
@@ -35,6 +34,9 @@ import { AuthModule } from './infra/providers/auth/auth.module'
 import { SigUpController } from './infra/app/controllers/http/sig-up.controller'
 import { CreateUser } from './domain/application/use-cases/create-user'
 import { SigInController } from './infra/app/controllers/http/sig-in.controller'
+import { APP_INTERCEPTOR } from '@nestjs/core'
+import { LoggingInterceptor } from './infra/interceptors/loggin.interceptor'
+import { CreateProduct } from './domain/application/use-cases/create-product'
 
 @Module({
   imports: [
@@ -87,6 +89,10 @@ import { SigInController } from './infra/app/controllers/http/sig-in.controller'
     DeleteOrderItem,
     Checkout,
     CreateUser,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
   ],
 })
 export class AppModule {}

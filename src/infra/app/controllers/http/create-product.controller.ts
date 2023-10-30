@@ -1,5 +1,4 @@
 import { Body, Controller, Post } from '@nestjs/common'
-import { CreateProduct } from 'src/domain/application/use-cases/create-product'
 import { ProductPresenter } from '@/infra/app/controllers/presenters/product-presenter'
 import { z } from 'zod'
 import { ZodValidationPipe } from '@/infra/pipes/zod-validation-pipe'
@@ -9,6 +8,7 @@ import {
   ApiCreatedResponse,
   ApiTags,
 } from '@nestjs/swagger'
+import { CreateProduct } from '@/domain/application/use-cases/create-product'
 
 const createProductBodySchema = z.object({
   name: z.string(),
