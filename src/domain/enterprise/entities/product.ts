@@ -5,6 +5,7 @@ export interface ProductProps {
   name: string
   price: number
   description: string
+  categories?: string[]
 }
 
 export class Product extends Entity<ProductProps> {
@@ -26,5 +27,9 @@ export class Product extends Entity<ProductProps> {
 
   get description() {
     return this.props.description
+  }
+
+  get categories() {
+    return this.props.categories
   }
 }

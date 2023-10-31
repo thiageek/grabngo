@@ -8,16 +8,118 @@
 	},
 	"item": [
 		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Sign up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    /**\n        Profile Codes:\n        0 = root\n        1 = administrator\n        2 = chef\n        3 = receptionist\n    **/\n    \"name\": \"User Name\",\n    \"login\": \"login\",\n    \"password\": \"password\",\n    \"profile\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PATH}}/api/v1/auth/sig-up",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"sig-up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign in",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"login@grabngo\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PATH}}/api/v1/auth/sig-in",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"sig-in"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Create client",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Client name\",\n    \"email\": \"client@email.com\",\n    \"cpf\": \"111.111.111-11\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PATH}}/api/v1/client",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"client"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Product",
 			"item": [
 				{
 					"name": "Create Product",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzYxZmM4MC0yZWY5LTQwYjQtODBiNy01NTRlZTc3NWIxODgiLCJsb2dpbiI6ImxvZ2luQGdyYWJuZ29AZ3JhYm5nbyIsIm5hbWUiOiJVc2VyIE5hbWUiLCJlbmFibGVkIjp0cnVlLCJpYXQiOjE2OTg3NTk2MDgsImV4cCI6MTY5ODg0NjAwOH0.h3HeHvyX4I6-fGXR8_qSomLEnrpsHc-j25ylIyxqFK8",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Product Name\",\n    \"price\": 42.24,\n    \"description\": \"Product description\"\n}",
+							"raw": "{\n    \"name\": \"Product Name A\",\n    \"price\": 42.24,\n    \"description\": \"Product description\",\n    \"categories\": [\"Category Name\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -43,16 +145,48 @@
 					"name": "Update Product",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzYxZmM4MC0yZWY5LTQwYjQtODBiNy01NTRlZTc3NWIxODgiLCJsb2dpbiI6ImxvZ2luQGdyYWJuZ29AZ3JhYm5nbyIsIm5hbWUiOiJVc2VyIE5hbWUiLCJlbmFibGVkIjp0cnVlLCJpYXQiOjE2OTg3NTk2MDgsImV4cCI6MTY5ODg0NjAwOH0.h3HeHvyX4I6-fGXR8_qSomLEnrpsHc-j25ylIyxqFK8",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Product New Name\",\n    \"price\": 24.42,\n    \"description\": \"Product new description\"\n}",
+							"raw": "{\n    \"name\": \"Product New Name\",\n    \"price\": 24.42,\n    \"description\": \"Product new description\",\n    \"categories\": [\"Category Name\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
+						"url": {
+							"raw": "{{PATH}}/api/v1/product/97a0ddbd-ba00-4f67-9b19-97ab01158a8a",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"97a0ddbd-ba00-4f67-9b19-97ab01158a8a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzYxZmM4MC0yZWY5LTQwYjQtODBiNy01NTRlZTc3NWIxODgiLCJsb2dpbiI6ImxvZ2luQGdyYWJuZ29AZ3JhYm5nbyIsIm5hbWUiOiJVc2VyIE5hbWUiLCJlbmFibGVkIjp0cnVlLCJpYXQiOjE2OTg3NTk2MDgsImV4cCI6MTY5ODg0NjAwOH0.h3HeHvyX4I6-fGXR8_qSomLEnrpsHc-j25ylIyxqFK8",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{PATH}}/api/v1/product/7793358f-6a0d-49f7-a285-a3fcf1c91091",
 							"host": [
@@ -69,12 +203,12 @@
 					"response": []
 				},
 				{
-					"name": "Delete Product",
+					"name": "List products",
 					"request": {
-						"method": "DELETE",
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{PATH}}/api/v1/product/7793358f-6a0d-49f7-a285-a3fcf1c91091",
+							"raw": "{{PATH}}/api/v1/product/?q=Category5",
 							"host": [
 								"{{PATH}}"
 							],
@@ -82,7 +216,219 @@
 								"api",
 								"v1",
 								"product",
-								"7793358f-6a0d-49f7-a285-a3fcf1c91091"
+								""
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "Category5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Create order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientId\": \"b47a6e3f-beab-4ee5-b6df-bb146740e671\",\n    \"items\": [\n        {\n            \"productId\": \"4eb6355a-2759-4b5f-840c-fcd537a15a08\",\n            \"quantity\": 1,\n            \"observation\": \"Sem alface\"\n        },\n        {\n            \"productId\": \"51fe689c-3620-469b-b7a7-79433ff5a545\",\n            \"quantity\": 1\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PATH}}/api/v1/order/",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzYxZmM4MC0yZWY5LTQwYjQtODBiNy01NTRlZTc3NWIxODgiLCJsb2dpbiI6ImxvZ2luQGdyYWJuZ29AZ3JhYm5nbyIsIm5hbWUiOiJVc2VyIE5hbWUiLCJlbmFibGVkIjp0cnVlLCJpYXQiOjE2OTg3NTk2MDgsImV4cCI6MTY5ODg0NjAwOH0.h3HeHvyX4I6-fGXR8_qSomLEnrpsHc-j25ylIyxqFK8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    /**\n        'done',\n        'in-queue',\n        'expired',\n        'in-progress',\n        'canceled',\n        'ready',\n        'waiting-pickup',\n        'discarded',\n        'delivered',\n    **/\n    \"status\": \"ready\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PATH}}/api/v1/order/9339637f-455f-4b35-bd1b-e50c72d97ce5",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"9339637f-455f-4b35-bd1b-e50c72d97ce5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create order item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderId\": \"9339637f-455f-4b35-bd1b-e50c72d97ce5\",\n    \"items\": [\n        {\n            \"productId\": \"aea3dd60-78ea-4bfc-945c-4cafcf85ed4d\",\n            \"quantity\": 1,\n            \"observation\": \"Sem sal\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PATH}}/api/v1/order/item",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update order item",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"item\": {\n        \"productId\": \"aea3dd60-78ea-4bfc-945c-4cafcf85ed4d\",\n        \"quantity\": 2,\n        \"observation\": \"Sem sal\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PATH}}/api/v1/order/9339637f-455f-4b35-bd1b-e50c72d97ce5/item/3d5997de-b06e-465e-8931-40e457de9501",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"9339637f-455f-4b35-bd1b-e50c72d97ce5",
+								"item",
+								"3d5997de-b06e-465e-8931-40e457de9501"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete order item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"item\": {\n        \"productId\": \"aea3dd60-78ea-4bfc-945c-4cafcf85ed4d\",\n        \"quantity\": 2,\n        \"observation\": \"Sem sal\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PATH}}/api/v1/order/9339637f-455f-4b35-bd1b-e50c72d97ce5/item/3d5997de-b06e-465e-8931-40e457de9501",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"9339637f-455f-4b35-bd1b-e50c72d97ce5",
+								"item",
+								"3d5997de-b06e-465e-8931-40e457de9501"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PATH}}/api/v1/order/",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout",
+			"item": [
+				{
+					"name": "Checkout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PATH}}/api/v1/order/9339637f-455f-4b35-bd1b-e50c72d97ce5/checkout",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"9339637f-455f-4b35-bd1b-e50c72d97ce5",
+								"checkout"
 							]
 						}
 					},

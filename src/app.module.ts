@@ -37,6 +37,8 @@ import { SigInController } from './infra/app/controllers/http/sig-in.controller'
 import { APP_INTERCEPTOR } from '@nestjs/core'
 import { LoggingInterceptor } from './infra/interceptors/loggin.interceptor'
 import { CreateProduct } from './domain/application/use-cases/create-product'
+import { FetchProductsController } from '@/infra/app/controllers/http/fetch-products.controller'
+import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
 
 @Module({
   imports: [
@@ -53,6 +55,7 @@ import { CreateProduct } from './domain/application/use-cases/create-product'
     CreateProductController,
     UpdateProductController,
     DeleteProductController,
+    FetchProductsController,
     CreateOrderController,
     FetchOrdersController,
     UpdateOrderController,
@@ -81,6 +84,7 @@ import { CreateProduct } from './domain/application/use-cases/create-product'
     CreateProduct,
     UpdateProduct,
     DeleteProduct,
+    FetchProducts,
     CreateOrder,
     FetchOrder,
     UpdateOrder,

@@ -9,6 +9,9 @@ export class ProductMapper {
         name: data.name,
         price: data.price,
         description: data.description,
+        categories: data['categories'].map(
+          (category) => category.category.name,
+        ),
       },
       new UniqueEntityId(data.id),
     )
@@ -20,6 +23,7 @@ export class ProductMapper {
       name: data.name,
       price: data.price,
       description: data.description,
+      categories: data.categories,
     }
   }
 }

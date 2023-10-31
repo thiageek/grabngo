@@ -15,6 +15,10 @@ export class DeleteProduct {
 
     if (isNil(product)) throw new Error('product not found')
 
-    await this.repository.delete(product)
+    try {
+      await this.repository.delete(product)
+    } catch (error: any) {
+      throw new Error(error)
+    }
   }
 }
