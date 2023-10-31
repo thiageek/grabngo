@@ -1,21 +1,53 @@
 import { PrismaClient } from '@prisma/client'
+import { adminUser, productsByCategory } from './data'
+
 const prisma = new PrismaClient()
+
 async function main() {
-  const adminUser = await prisma.user.upsert({
-    where: { login: 'admin@grabngo' },
-    update: {},
-    create: {
-      login: 'admin@grabngo',
-      name: 'Admin',
-      password:
-        '$argon2id$v=19$m=65536,t=3,p=4$Za2R9qjZIDDgGqRP/5wLeA$wCL3jr/aoV51v+0IIycDuanG9OcKWKp8DCZtDA3m+zE', //password
-      profile: 0,
-      enabled: true,
-      createdAt: new Date(),
-    },
+  await Promise.all([
+    prisma.user.deleteMany(),
+    prisma.productCategories.deleteMany(),
+    prisma.category.deleteMany(),
+    prisma.product.deleteMany(),
+  ]).then(() => {
+    console.log('- Database cleaned')
   })
 
-  console.log({ adminUser })
+  await prisma.user
+    .create({
+      data: adminUser,
+    })
+    .then((user) => {
+      console.log(`- Admin user with login "${user.login}" created`)
+    })
+
+  await Promise.all(
+    productsByCategory.map(async (category) => {
+      const categoryCreated = await prisma.category.create({
+        data: {
+          name: category.category,
+        },
+      })
+      category.products.map(async (product) => {
+        const productCreated = await prisma.product.create({
+          data: {
+            name: product.name,
+            price: product.price,
+            description: product.description,
+          },
+        })
+
+        await prisma.productCategories.create({
+          data: {
+            productId: productCreated.id,
+            categoryId: categoryCreated.id,
+          },
+        })
+      })
+    }),
+  ).then(() => {
+    console.log('- Products created')
+  })
 }
 main()
   .then(async () => {

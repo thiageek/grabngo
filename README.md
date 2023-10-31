@@ -12,12 +12,34 @@ Miro: https://miro.com/welcomeonboard/SVdxc1dwQjZBVGI1bGxYRDJjSndNdnlxZ2ZJOXVOMl
 - Pedido: Solicitação de preparo e entrega de produtos, vinculado a um pagamento, podendo estar vinculado a um cliente. Possui um status de acompanhamento.
 - Status de acompanhamento: Indicação do estado de um pedido, podendo ser "Realizado", "Na fila", "Expirado", "Em preparo", "Cancelado", "Pronto", "Aguardando Retirada", "Descartado" e "Entregue"
 
-## Prisma
+## Scripts
 
+_i. Executar migrations no banco de dados do ambiente de desenvolvimento:_
 ```bash 
-# Cria migrations e atualiza banco de desenvolvimento
-$ npx prisma migrate dev 
+$ npx prisma migrate dev
+```
 
-# Rodar em ambiente de Prod ou Test
+_ii. Executar migrations no banco de dados dos ambientes de staging ou produção:_
+```bash
 $ npx prisma migrate deploy
+```
+
+_iii. Popular banco de dados:_
+```bash
+$ npm run prisma:seed
+```
+
+_iv. Executar o sistema no ambiente de desenvolvimento:_
+```bash
+$ npm run start:dev
+```
+
+_v. Preparar ambiente para teste de integração:_
+```bash
+$ npm run pretest:e2e
+```
+
+_vi. Executar testes de integração:_
+```bash
+$ npm run test:e2e
 ```

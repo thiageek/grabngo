@@ -20,7 +20,10 @@ describe('Create product', () => {
 
     await sut.execute(product)
 
-    const spy = await mockProductRepository.fetch({ query: 'Product Name' })
+    const spy = await mockProductRepository.fetch({
+      page: 1,
+      query: 'Product Name',
+    })
     expect(spy).toHaveLength(1)
     expect(spy[0]).toHaveProperty('props', {
       name: product.name,
