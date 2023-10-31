@@ -6,7 +6,10 @@ export class MockClientRepository implements ClientRepository {
   async find(filter: string): Promise<Client | null> {
     const result = this.mockClients.find(
       (f) =>
-        f.id.toString() === filter || f.cpf === filter || f.name === filter,
+        f.id.toString() === filter ||
+        f.cpf === filter ||
+        f.name === filter ||
+        f.email === filter,
     )
     return result ?? null
   }

@@ -100,6 +100,31 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Find client",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PATH}}/api/v1/client?cpf=111.111.111-11",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"client"
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": "111.111.111-11"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

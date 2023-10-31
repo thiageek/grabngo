@@ -1,4 +1,4 @@
-import { MockProductRepository } from '@/infra/app/repositories/in-memory/mock-product-repository'
+import { MockProductRepository } from '@test/repositories/mock-product-repository'
 import { Product } from '@/domain/enterprise/entities/product'
 import { FetchProducts } from '@/domain/application/use-cases/fetch-products/index'
 
@@ -33,7 +33,7 @@ describe('Find products', () => {
   })
 
   it('Should be able to find products by name', async () => {
-    const params = { query: 'Product #1' }
+    const params = { page: 1, query: 'Product #1' }
 
     const got = await sut.execute(params)
 
@@ -41,7 +41,7 @@ describe('Find products', () => {
   })
 
   it('Should be able to find products by description', async () => {
-    const params = { query: 'Product #2 description' }
+    const params = { page: 1, query: 'Product #2 description' }
 
     const got = await sut.execute(params)
 
@@ -49,7 +49,7 @@ describe('Find products', () => {
   })
 
   it('Should be able to find products by category', async () => {
-    const params = { query: 'Category 1' }
+    const params = { page: 1, query: 'Category 1' }
 
     const got = await sut.execute(params)
 
