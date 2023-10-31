@@ -30,15 +30,17 @@ import { Checkout } from './domain/application/use-cases/checkout'
 import { UpdateOrderItemController } from './infra/app/controllers/http/update-order-item.controller'
 import { DeleteOrderItemController } from './infra/app/controllers/http/delete-order-item.controller'
 import { CheckoutController } from './infra/app/controllers/http/checkout.controller'
-import { AuthModule } from './infra/providers/auth/auth.module'
+import { AuthModule } from '@/infra/providers/auth/auth.module'
 import { SigUpController } from './infra/app/controllers/http/sig-up.controller'
 import { CreateUser } from './domain/application/use-cases/create-user'
 import { SigInController } from './infra/app/controllers/http/sig-in.controller'
 import { APP_INTERCEPTOR } from '@nestjs/core'
 import { LoggingInterceptor } from './infra/interceptors/loggin.interceptor'
 import { CreateProduct } from './domain/application/use-cases/create-product'
-import { FetchProductsController } from '@/infra/app/controllers/http/fetch-products.controller'
+import { FetchProductsController } from './infra/app/controllers/http/fetch-products.controller'
 import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
+import { FindClient } from '@/domain/application/use-cases/find-client'
+import { FindClientController } from '@/infra/app/controllers/http/find-client.controller'
 
 @Module({
   imports: [
@@ -52,6 +54,7 @@ import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
   ],
   controllers: [
     CreateClientController,
+    FindClientController,
     CreateProductController,
     UpdateProductController,
     DeleteProductController,
@@ -81,6 +84,7 @@ import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
     },
 
     CreateClient,
+    FindClient,
     CreateProduct,
     UpdateProduct,
     DeleteProduct,

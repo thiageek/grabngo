@@ -1,5 +1,5 @@
 import { DeleteProduct } from '@/domain/application/use-cases/delete-product/index'
-import { MockProductRepository } from '@/infra/app/repositories/in-memory/mock-product-repository'
+import { MockProductRepository } from '@test/repositories/mock-product-repository'
 import { Product } from '@/domain/enterprise/entities/product'
 
 let sut: DeleteProduct

@@ -1,5 +1,5 @@
 import { CreateProduct } from './index'
-import { MockProductRepository } from '@/infra/app/repositories/in-memory/mock-product-repository'
+import { MockProductRepository } from '@test/repositories/mock-product-repository'
 import { ResourceAlreadyExists } from '@/core/errors/resource-already-exists.error'
 
 let sut: CreateProduct

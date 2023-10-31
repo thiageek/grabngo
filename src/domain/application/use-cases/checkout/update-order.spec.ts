@@ -6,7 +6,7 @@ import { Order } from '@/domain/enterprise/entities/order'
 import { OrderItem } from '@/domain/enterprise/entities/order-item'
 import { ResourceNotFound } from '@/core/errors/resource-not-found-exists.error'
 import { ProductRepository } from '../../repositories/product-repository'
-import { MockProductRepository } from '@/infra/app/repositories/in-memory/mock-product-repository'
+import { MockProductRepository } from '@test/repositories/mock-product-repository'
 import { Product } from '@/domain/enterprise/entities/product'
 
 let sut: Checkout
