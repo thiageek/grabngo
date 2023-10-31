@@ -5,14 +5,17 @@ import {
   InternalServerErrorException,
   Logger,
   Post,
+  UseGuards,
 } from '@nestjs/common'
 import { CreateProduct } from 'src/domain/application/use-cases/create-product'
+import { JwtGuard } from '@/infra/providers/auth/guards'
 import { ProductPresenter } from '@/infra/app/controllers/presenters/product-presenter'
 import { ResourceAlreadyExists } from '@/core/errors/resource-already-exists.error'
 import { z } from 'zod'
 import { ZodValidationPipe } from '@/infra/pipes/zod-validation-pipe'
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiTags,
@@ -29,6 +32,8 @@ const bodyValidationPipe = new ZodValidationPipe(createProductBodySchema)
 type CreateProductBodySchema = z.infer<typeof createProductBodySchema>
 
 @ApiTags('Product')
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
 @Controller('product')
 export class CreateProductController {
   logger = new Logger(CreateProductController.name)
@@ -49,7 +54,7 @@ export class CreateProductController {
   @Post()
   async handler(@Body(bodyValidationPipe) body: CreateProductBodySchema) {
     try {
-      this.logger.log(`New request received path /client`)
+      this.logger.log(`New request received path /product`)
       const { name, price, description, categories } = body
       const { product } = await this.createProduct.execute({
         name,

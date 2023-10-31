@@ -8,7 +8,7 @@ export class FetchProductsController {
 
   @Get()
   async handler(@Query('q') query: string) {
-    const products = await this.fetchProducts.execute({ query })
+    const products = await this.fetchProducts.execute({ page: 1, query })
     return products.map((p) => ProductPresenter.toHttp(p))
   }
 }

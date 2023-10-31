@@ -55,6 +55,7 @@ import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
     CreateProductController,
     UpdateProductController,
     DeleteProductController,
+    FetchProductsController,
     CreateOrderController,
     FetchOrdersController,
     UpdateOrderController,
@@ -64,7 +65,6 @@ import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
     CheckoutController,
     SigUpController,
     SigInController,
-    FetchProductsController,
   ],
   providers: [
     {
@@ -84,6 +84,7 @@ import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
     CreateProduct,
     UpdateProduct,
     DeleteProduct,
+    FetchProducts,
     CreateOrder,
     FetchOrder,
     UpdateOrder,
@@ -92,7 +93,6 @@ import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
     DeleteOrderItem,
     Checkout,
     CreateUser,
-    FetchProducts,
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
