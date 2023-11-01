@@ -39,10 +39,12 @@ describe('FetchProductsController', () => {
 
   afterEach(async () => {
     const db = app.get(PrismaService)
-    await db.client.deleteMany({})
+    await db.productCategories.deleteMany()
+    await db.product.deleteMany()
+    await db.category.deleteMany()
   })
 
   it('/ (GET)', async () => {
-    return request(app.getHttpServer()).get('/product').expect(201)
+    return request(app.getHttpServer()).get('/product').expect(200)
   })
 })

@@ -7,7 +7,6 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common'
-import { CreateProduct } from 'src/domain/application/use-cases/create-product'
 import { JwtGuard } from '@/infra/providers/auth/guards'
 import { ProductPresenter } from '@/infra/app/controllers/presenters/product-presenter'
 import { ResourceAlreadyExists } from '@/core/errors/resource-already-exists.error'
@@ -20,6 +19,7 @@ import {
   ApiCreatedResponse,
   ApiTags,
 } from '@nestjs/swagger'
+import { CreateProduct } from '@/domain/application/use-cases/create-product'
 
 const createProductBodySchema = z.object({
   name: z.string(),
