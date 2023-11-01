@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common'
 import { EnvModule } from './infra/providers/env/env.module'
 import { CreateClientController } from './infra/app/controllers/http/create-client.controller'
 import { CreateProductController } from '@/infra/app/controllers/http/create-product.controller'
@@ -39,6 +39,7 @@ import { LoggingInterceptor } from './infra/interceptors/loggin.interceptor'
 import { CreateProduct } from './domain/application/use-cases/create-product'
 import { FetchProductsController } from '@/infra/app/controllers/http/fetch-products.controller'
 import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
+import { ValidateClientMiddleware } from './infra/common/middlewares/validate-client.middleware'
 
 @Module({
   imports: [
@@ -99,4 +100,10 @@ import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
     },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(ValidateClientMiddleware)
+      .forRoutes({ path: 'order', method: RequestMethod.POST })
+  }
+}

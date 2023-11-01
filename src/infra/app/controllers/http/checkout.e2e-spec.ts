@@ -6,6 +6,7 @@ import { PrismaService } from '@/infra/providers/database/prisma/prisma.service'
 import { Product } from '@/domain/enterprise/entities/product'
 import { OrderItem } from '@/domain/enterprise/entities/order-item'
 import { Order } from '@/domain/enterprise/entities/order'
+import { faker } from '@faker-js/faker'
 
 describe('CheckoutController', () => {
   let app: INestApplication
@@ -22,9 +23,9 @@ describe('CheckoutController', () => {
     await app.init()
     const bd = app.get(PrismaService)
     product = Product.create({
-      name: 'test',
+      name: faker.lorem.word(),
       price: 50,
-      description: 'Product description',
+      description: faker.lorem.text(),
     })
 
     item = OrderItem.create({
@@ -70,27 +71,13 @@ describe('CheckoutController', () => {
   })
 
   afterEach(async () => {
-    const bd = app.get(PrismaService)
-    await bd.item.delete({
-      where: { id: item.id.toString() },
-    })
-    await bd.order.delete({
-      where: { id: order.id.toString() },
-    })
-    await bd.product.delete({
-      where: { id: product.id.toString() },
-    })
+    const db = app.get(PrismaService)
+    await db.productCategories.deleteMany()
+    await db.item.deleteMany()
+    await db.order.deleteMany()
+    await db.product.deleteMany()
+    await db.category.deleteMany()
   })
-
-  // it('/ (POST)', () => {
-  //   return request(app.getHttpServer())
-  //     .post('/order/sig-in')
-  //     .send({
-  //       login: 'admin@grabngo',
-  //       password: 'password',
-  //     })
-  //     .expect(200)
-  // })
 
   it('/ (POST)', () => {
     return request(app.getHttpServer())
@@ -100,7 +87,7 @@ describe('CheckoutController', () => {
         expect(body).toEqual({
           products: [
             {
-              name: 'test',
+              name: product.name,
               quantity: 2,
               price: 50,
               subTotal: 100,

@@ -4,14 +4,12 @@ import { adminUser, productsByCategory } from './data'
 const prisma = new PrismaClient()
 
 async function main() {
-  await Promise.all([
-    prisma.user.deleteMany(),
-    prisma.productCategories.deleteMany(),
-    prisma.category.deleteMany(),
-    prisma.product.deleteMany(),
-  ]).then(() => {
-    console.log('- Database cleaned')
-  })
+  await prisma.user.deleteMany()
+  await prisma.productCategories.deleteMany()
+  await prisma.item.deleteMany()
+  await prisma.order.deleteMany()
+  await prisma.product.deleteMany()
+  await prisma.category.deleteMany()
 
   await prisma.user
     .create({

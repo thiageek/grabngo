@@ -33,7 +33,7 @@ describe('Find products', () => {
   })
 
   it('Should be able to find products by name', async () => {
-    const params = { query: 'Product #1' }
+    const params = { query: 'Product #1', page: 1 }
 
     const got = await sut.execute(params)
 
@@ -41,7 +41,7 @@ describe('Find products', () => {
   })
 
   it('Should be able to find products by description', async () => {
-    const params = { query: 'Product #2 description' }
+    const params = { query: 'Product #2 description', page: 1 }
 
     const got = await sut.execute(params)
 
@@ -49,7 +49,7 @@ describe('Find products', () => {
   })
 
   it('Should be able to find products by category', async () => {
-    const params = { query: 'Category 1' }
+    const params = { query: 'Category 1', page: 1 }
 
     const got = await sut.execute(params)
 
