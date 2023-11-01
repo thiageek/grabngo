@@ -19,6 +19,11 @@ describe('CreateClientController', () => {
   afterEach(async () => {
     const bd = app.get(PrismaService)
     await bd.client.deleteMany({})
+    await bd.productCategories.deleteMany()
+    await bd.item.deleteMany()
+    await bd.order.deleteMany()
+    await bd.product.deleteMany()
+    await bd.category.deleteMany()
   })
 
   it('/ (POST)', () => {

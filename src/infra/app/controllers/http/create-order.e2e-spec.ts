@@ -4,8 +4,9 @@ import { AppModule } from '@/app.module'
 import { PrismaService } from '@/infra/providers/database/prisma/prisma.service'
 import * as request from 'supertest'
 import { Product } from '@/domain/enterprise/entities/product'
+import { faker } from '@faker-js/faker'
 
-describe('CreateProductController', () => {
+describe('CreateOrderController', () => {
   let app: INestApplication
   let product: Product
 
@@ -18,9 +19,9 @@ describe('CreateProductController', () => {
     await app.init()
     const bd = app.get(PrismaService)
     product = Product.create({
-      name: 'test',
+      name: faker.lorem.word(),
       price: 50,
-      description: 'Product description',
+      description: faker.lorem.paragraph(),
     })
 
     await bd.product.create({
@@ -37,6 +38,7 @@ describe('CreateProductController', () => {
     const db = app.get(PrismaService)
     await db.productCategories.deleteMany()
     await db.item.deleteMany()
+    await db.order.deleteMany()
     await db.product.deleteMany()
     await db.category.deleteMany()
   })
@@ -49,7 +51,22 @@ describe('CreateProductController', () => {
           {
             productId: product.id.toString(),
             quantity: 1,
-            observation: 'test',
+            observation: faker.lorem.word(),
+          },
+        ],
+      })
+      .expect(201)
+  })
+
+  it('/ (POST)', async () => {
+    return request(app.getHttpServer())
+      .post('/order')
+      .send({
+        items: [
+          {
+            productId: product.id.toString(),
+            quantity: 1,
+            observation: faker.lorem.word(),
           },
         ],
       })
