@@ -39,6 +39,9 @@ import { LoggingInterceptor } from './infra/interceptors/loggin.interceptor'
 import { CreateProduct } from './domain/application/use-cases/create-product'
 import { FetchProductsController } from './infra/app/controllers/http/fetch-products.controller'
 import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
+import { FindClientController } from './infra/app/controllers/http/find-client.controller'
+import { FindClient } from './domain/application/use-cases/find-client'
+import { ValidateClientMiddleware } from './infra/common/middlewares/validate-client.middleware'
 
 @Module({
   imports: [
