@@ -78,6 +78,11 @@ export class PrismaProductRepository implements ProductRepository {
   async delete(data: Product): Promise<void> {
     try {
       const raw = ProductMapper.toPrisma(data)
+      await this.prisma.productCategories.deleteMany({
+        where: {
+          productId: raw.id,
+        },
+      })
       await this.prisma.product.delete({
         where: {
           id: raw.id,
