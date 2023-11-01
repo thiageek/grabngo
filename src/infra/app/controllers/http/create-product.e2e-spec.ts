@@ -34,14 +34,13 @@ describe('CreateProductController', () => {
 
     const authToken = authResponse.body.token
 
-    return request(app.getHttpServer())
+    return await request(app.getHttpServer())
       .post('/product')
       .set('Authorization', `Bearer ${authToken}`)
       .send({
         name: 'name e2e',
         price: 10.0,
         description: 'description e2e',
-        categories: ['category e2e one'],
       })
       .expect(201)
   })
