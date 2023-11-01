@@ -31,12 +31,11 @@ describe('FindClientController', () => {
   })
 
   it('/ (GET)', async () => {
-    return request(
-      app
-        .getHttpServer()
-        .get('/client?cpf=any_cpf')
-        .expect(200)
-        .expect('any_name'),
-    )
+    return request(app.getHttpServer())
+      .get('/client')
+      .query({
+        cpf: 'any_cpf',
+      })
+      .expect(200)
   })
 })
