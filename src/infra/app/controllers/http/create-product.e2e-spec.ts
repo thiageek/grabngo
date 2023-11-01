@@ -17,18 +17,33 @@ describe('CreateProductController', () => {
   })
 
   afterEach(async () => {
-    const db = app.get(PrismaService)
-    await db.client.deleteMany({})
+    const bd = app.get(PrismaService)
+    await bd.client.deleteMany({})
+    await bd.productCategories.deleteMany()
+    await bd.item.deleteMany()
+    await bd.order.deleteMany()
+    await bd.product.deleteMany()
+    await bd.category.deleteMany()
   })
 
   it('/ (POST)', async () => {
-    return request(app.getHttpServer())
-      .post('/product')
+    const authResponse = await request(app.getHttpServer())
+      .post('/auth/sig-in')
       .send({
-        name: 'Product 1',
+        login: 'admin@grabngo',
+        password: 'password',
+      })
+      .expect(201)
+
+    const authToken = authResponse.body.token
+
+    return await request(app.getHttpServer())
+      .post('/product')
+      .set('Authorization', `Bearer ${authToken}`)
+      .send({
+        name: 'name e2e',
         price: 10.0,
-        description: 'Product 1 description',
-        categories: ['Category 1', 'Category 2'],
+        description: 'description e2e',
       })
       .expect(201)
   })
