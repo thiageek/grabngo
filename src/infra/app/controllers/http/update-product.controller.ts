@@ -15,9 +15,9 @@ import { JwtGuard } from '@/infra/providers/auth/guards'
 import { UpdateOrderController } from '@/infra/app/controllers/http/update-order.controller'
 
 const updateProductBodySchema = z.object({
-  name: z.string(),
-  price: z.number(),
-  description: z.string(),
+  name: z.string().optional(),
+  price: z.number().optional(),
+  description: z.string().optional(),
   categories: z.array(z.string()).optional(),
 })
 
