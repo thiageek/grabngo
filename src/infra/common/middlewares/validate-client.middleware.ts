@@ -14,12 +14,12 @@ export class ValidateClientMiddleware implements NestMiddleware {
   async use(req: Request, res: Response, next: NextFunction) {
     const { clientId } = req.body
 
-    if (!clientId) next()
+    if (!clientId) return next()
 
     const client = await this.repository.find(clientId)
 
     if (!client) throw new BadRequestException('Invalid client.')
 
-    next()
+    return next()
   }
 }
