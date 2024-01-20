@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grabngo-deployment
+  labels:
+    app: grabngo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grabngo
+  template:
+    metadata:
+      labels:
+        app: grabngo
+    spec:
+      containers:
+        - name: grabngo
+          image: 'url/docker-hub'
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: grabngo-secrets
+                  key: databaseUrl
+             
