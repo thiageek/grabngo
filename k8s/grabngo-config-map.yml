@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: grabngo-secrets
 data:
-  databaseUrl: "grabngo"
+  databaseUrl: "postgresql://postgres:postgres@postgres-service:5432/mydb?schema=public"
