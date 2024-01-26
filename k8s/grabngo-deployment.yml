@@ -16,15 +16,13 @@ spec:
     spec:
       containers:
         - name: grabngo
-          image: ''
+          image: 'thiageek/grabngo:test'
           imagePullPolicy: Always
           resources:
-            requests:
-              memory: "128Mi"
-              cpu: "500m"
-            limits:
-              memory: "256Mi"
-              cpu: "1000m"
+              requests:
+                cpu: "500m"
+              limits:
+                cpu: "1000m"
           ports:
             - containerPort: 3000
           env:
