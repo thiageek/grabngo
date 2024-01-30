@@ -2,15 +2,17 @@ import {
   Prisma,
   Order as PrismaOrder,
   Item as PrismaOrderItem,
+  OrderStatus as PrismaOrderStatus,
 } from '@prisma/client'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Order } from '@/domain/enterprise/entities/order'
-import { Status } from '@/domain/enterprise/entities/value-objects/status'
 import { OrderItemMapper } from './order-item-mapper'
+import { OrderStatusMapper } from '@/infra/app/repositories/prisma/mappers/order-status-mapper'
 
 type raw = {
   order: PrismaOrder
   items: PrismaOrderItem[]
+  status: PrismaOrderStatus
 }
 
 export class OrderMapper {
@@ -21,7 +23,8 @@ export class OrderMapper {
           ? new UniqueEntityId(data.order.clientId)
           : null,
         items: data.items.map((i) => OrderItemMapper.toDomain(i)),
-        status: new Status(data.order.status),
+        status: OrderStatusMapper.toDomain(data.status),
+        orderNumber: data.order.orderNumber,
         createdAt: data.order.createdAt,
         updatedAt: data.order.updatedAt,
       },
@@ -34,7 +37,7 @@ export class OrderMapper {
       id: data.id.toString(),
       orderNumber: data.orderNumber,
       clientId: data.clientId?.toString(),
-      status: data.status.value,
+      statusId: data.status.id.toString(),
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
     }

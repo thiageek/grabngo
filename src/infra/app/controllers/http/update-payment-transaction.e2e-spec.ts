@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { INestApplication } from '@nestjs/common'
-import * as request from 'supertest'
 import { AppModule } from '@/app.module'
 import { PrismaService } from '@/infra/providers/database/prisma/prisma.service'
 import { Product } from '@/domain/enterprise/entities/product'
-import { OrderItem } from '@/domain/enterprise/entities/order-item'
-import { Order } from '@/domain/enterprise/entities/order'
 import { faker } from '@faker-js/faker'
+import { OrderItem } from '@/domain/enterprise/entities/order-item'
 import { OrderStatusNameEnum } from '@prisma/client'
-import { OrderStatus } from '@/domain/enterprise/entities/order-status'
 import { ResourceNotFound } from '@/core/errors/resource-not-found-exists.error'
+import { OrderStatus } from '@/domain/enterprise/entities/order-status'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { Order } from '@/domain/enterprise/entities/order'
+import { INestApplication } from '@nestjs/common'
+import * as request from 'supertest'
 
-describe('CheckoutController', () => {
+describe('UpdatePaymentTransactionController', () => {
   let app: INestApplication
   let product: Product
   let item: OrderItem
@@ -94,32 +94,6 @@ describe('CheckoutController', () => {
         updatedAt: item.updatedAt,
       },
     })
-
-    await bd.paymentTransaction.create({
-      data: {
-        orderId: order.id.toString(),
-        transactionId: new UniqueEntityId().toString(),
-        transactionStatus: 'WAITING',
-        transactionMethod: 'CREDITCARD',
-        transactionGateway: 'MERCADOPAGO',
-        transactionDatetime: new Date(),
-        amount: 100,
-        createdAt: new Date(),
-      },
-    })
-
-    await bd.paymentTransaction.create({
-      data: {
-        orderId: order.id.toString(),
-        transactionId: new UniqueEntityId().toString(),
-        transactionStatus: 'APPROVED',
-        transactionMethod: 'CREDITCARD',
-        transactionGateway: 'MERCADOPAGO',
-        transactionDatetime: new Date(),
-        amount: 100,
-        createdAt: new Date(),
-      },
-    })
   })
 
   afterEach(async () => {
@@ -132,24 +106,28 @@ describe('CheckoutController', () => {
     await db.category.deleteMany()
   })
 
-  it('/ (POST)', () => {
-    return request(app.getHttpServer())
-      .get(`/order/${order.id.toString()}/checkout`)
-      .expect(200)
-      .then(({ body }) => {
-        expect(body).toEqual({
-          products: [
-            {
-              name: product.name,
-              quantity: 2,
-              price: 50,
-              subTotal: 100,
-            },
-          ],
-          orderNumber: order.orderNumber,
-          total: 100,
-          paymentStatus: 'APPROVED',
-        })
+  it('/ (POST)', async () => {
+    const authResponse = await request(app.getHttpServer())
+      .post('/auth/sig-in')
+      .send({
+        login: 'admin@grabngo',
+        password: 'password',
       })
+      .expect(201)
+
+    const authToken = authResponse.body.token
+
+    const response = await request(app.getHttpServer())
+      .post(`/webhook-payment/${order.id}`)
+      .set('Authorization', `Bearer ${authToken}`)
+      .send({
+        transactionId: faker.lorem.word(),
+        transactionStatus: 'APPROVED',
+        transactionMethod: 'CREDITCARD',
+        transactionGateway: 'MERCADOPAGO',
+        transactionDatetime: new Date().toString(),
+        amount: 10000,
+      })
+    expect(response.status).toBe(201)
   })
 })

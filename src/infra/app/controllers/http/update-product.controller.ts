@@ -1,4 +1,12 @@
-import { Body, Controller, InternalServerErrorException, Logger, Param, Put, UseGuards } from "@nestjs/common"
+import {
+  Body,
+  Controller,
+  InternalServerErrorException,
+  Logger,
+  Param,
+  Put,
+  UseGuards,
+} from '@nestjs/common'
 import { ProductPresenter } from '@/infra/app/controllers/presenters/product-presenter'
 import { UpdateProduct } from '@/domain/application/use-cases/update-product'
 import { z } from 'zod'

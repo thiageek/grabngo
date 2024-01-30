@@ -26,13 +26,13 @@ describe('FindClientController', () => {
   })
 
   afterEach(async () => {
-    const bd = app.get(PrismaService)
-    await bd.client.deleteMany({})
-    await bd.productCategories.deleteMany()
-    await bd.item.deleteMany()
-    await bd.order.deleteMany()
-    await bd.product.deleteMany()
-    await bd.category.deleteMany()
+    const db = app.get(PrismaService)
+    await db.productCategories.deleteMany()
+    await db.item.deleteMany()
+    await db.paymentTransaction.deleteMany()
+    await db.order.deleteMany()
+    await db.product.deleteMany()
+    await db.category.deleteMany()
   })
 
   it('/ (GET)', async () => {

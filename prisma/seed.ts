@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client'
-import { adminUser, productsByCategory } from './data'
+import { PrismaClient, OrderStatusNameEnum } from '@prisma/client'
+import { adminUser, orderStatusList, productsByCategory } from './data'
 
 const prisma = new PrismaClient()
 
@@ -45,6 +45,20 @@ async function main() {
     }),
   ).then(() => {
     console.log('- Products created')
+  })
+
+  await Promise.all(
+    orderStatusList.map(async (orderStatus) => {
+      await prisma.orderStatus.create({
+        data: {
+          name: OrderStatusNameEnum[orderStatus.name as keyof typeof OrderStatusNameEnum],
+          sequenceOrder: orderStatus.sequenceOrder,
+          description: orderStatus.description,
+        },
+      })
+    }),
+  ).then(() => {
+    console.log('- Order status created')
   })
 }
 main()

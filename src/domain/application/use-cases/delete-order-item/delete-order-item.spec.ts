@@ -6,6 +6,7 @@ import { Order } from '@/domain/enterprise/entities/order'
 import { OrderItem } from '@/domain/enterprise/entities/order-item'
 import { ResourceNotFound } from '@/core/errors/resource-not-found-exists.error'
 import { NotAllowed } from '@/core/errors/not-allowed.error'
+import { OrderStatusNameEnum } from '@prisma/client'
 
 let sut: DeleteOrderItem
 let repository: OrderRepository
@@ -28,8 +29,11 @@ describe('Delete order item', () => {
       observation: 'test observation',
     })
 
+    const status = await repository.findStatus(OrderStatusNameEnum.CREATED)
+
     const order = Order.create({
       clientId: new UniqueEntityId(),
+      status: status,
       items: [item, item2],
     })
 
@@ -61,8 +65,11 @@ describe('Delete order item', () => {
       observation: 'test observation',
     })
 
+    const status = await repository.findStatus(OrderStatusNameEnum.CREATED)
+
     const order = Order.create({
       clientId: new UniqueEntityId(),
+      status: status,
       items: [item],
     })
 
@@ -89,8 +96,11 @@ describe('Delete order item', () => {
       observation: 'test observation',
     })
 
+    const status = await repository.findStatus(OrderStatusNameEnum.CREATED)
+
     const order = Order.create({
       clientId: new UniqueEntityId(),
+      status: status,
       items: [item, item2],
     })
 

@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common'
 import { FindClient } from '@/domain/application/use-cases/find-client'
 import { ClientPresenter } from '@/infra/app/controllers/presenters/client-presenter'
-import { ApiCreatedResponse, ApiNotFoundResponse } from "@nestjs/swagger"
+import { ApiCreatedResponse, ApiNotFoundResponse } from '@nestjs/swagger'
 import { ResourceNotFound } from '@/core/errors/resource-not-found-exists.error'
 
 @Controller('client')

@@ -54,6 +54,7 @@ export class CreateOrderController {
             },
           },
         },
+        status: { type: 'string' },
       },
     },
   })

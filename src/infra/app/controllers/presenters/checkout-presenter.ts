@@ -26,7 +26,9 @@ export class CheckoutPresenter {
 
     return {
       products: productResponse,
+      orderNumber: order.orderNumber,
       total,
+      paymentStatus: order.paymentStatus,
     }
   }
 }

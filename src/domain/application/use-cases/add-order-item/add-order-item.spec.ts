@@ -5,6 +5,7 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Order } from '@/domain/enterprise/entities/order'
 import { OrderItem } from '@/domain/enterprise/entities/order-item'
 import { ResourceNotFound } from '@/core/errors/resource-not-found-exists.error'
+import { OrderStatusNameEnum } from '@prisma/client'
 
 let sut: AddOrderItem
 let repository: OrderRepository
@@ -21,8 +22,11 @@ describe('Add order item', () => {
       observation: 'test observation',
     })
 
+    const status = await repository.findStatus(OrderStatusNameEnum.CREATED)
+
     const order = Order.create({
       clientId: new UniqueEntityId(),
+      status: status,
       items: [item],
     })
 

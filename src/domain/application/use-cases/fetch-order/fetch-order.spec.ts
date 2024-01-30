@@ -4,6 +4,7 @@ import { MockOrderRepository } from '@test/repositories/mock-order-repository'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Order } from '@/domain/enterprise/entities/order'
 import { OrderItem } from '@/domain/enterprise/entities/order-item'
+import { OrderStatusNameEnum } from '@prisma/client'
 
 let sut: FetchOrder
 let repository: OrderRepository
@@ -20,8 +21,11 @@ describe('Fetch orders', () => {
       observation: 'test observation',
     })
 
+    const status = await repository.findStatus(OrderStatusNameEnum.CREATED)
+
     const order = Order.create({
       clientId: new UniqueEntityId(),
+      status: status,
       items: [item],
     })
 

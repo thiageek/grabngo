@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Order } from '@/domain/enterprise/entities/order'
 import { OrderRepository } from '../../repositories/order-repository'
-import { Status } from '@/domain/enterprise/entities/value-objects/status'
 import { ResourceNotFound } from '@/core/errors/resource-not-found-exists.error'
 
 export interface Input {
@@ -17,14 +16,20 @@ export interface Output {
 export class UpdateOrder {
   constructor(private readonly repository: OrderRepository) {}
 
-  async execute({ id, status }: Input): Promise<Output> {
-    const order = await this.repository.findOrder(id)
+  async execute(input: Input): Promise<Output> {
+    const order = await this.repository.findOrder(input.id)
 
     if (!order) throw new ResourceNotFound('Invalid order')
 
-    if (status) order.status = new Status(status)
+    if (input.status && input.status !== order.status.name) {
+      const status = await this.repository.findStatus(input.status)
 
-    await this.repository.saveOrder(order)
+      if (!status) throw new ResourceNotFound('Invalid status')
+
+      order.status = status
+
+      await this.repository.saveOrder(order)
+    }
 
     return { order }
   }
