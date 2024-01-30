@@ -2,7 +2,8 @@
   ⚓ Grabngo-Kubernates ⚓
 </h1>
 
-![version](https://img.shields.io/badge/version-v1-blue)
+
+![ACT](../docs/grabngo-act.svg "ACT")
 
 # Indice
 
@@ -44,11 +45,17 @@ A estrutura de pastas é organizada da seguinte forma:
 
 ## 🛟 Comandos
 
+**Metrics**
+
+```bash 
+$ kubectl apply -f metrics.yml
+```
+
 **Banco de dados**
 
 ```bash 
 # Criando pod
-$ kubectl apply -f= bd-deployment.yml
+$ kubectl apply -f bd-deployment.yml
 # Criando service de acesso
 $ kubectl apply -f bd-service.yml
 ```
@@ -59,7 +66,7 @@ $ kubectl apply -f bd-service.yml
 # Criando configMap das envs
 $ kubectl apply -f grabngo-config-map.yml
 # Criando pod
-$ kubectl apply -f= grabngo-deployment.yml
+$ kubectl apply -f grabngo-deployment.yml
 # Criando service
 $ kubectl apply -f grabngo-service.yml
 # Criando hpa
@@ -83,7 +90,6 @@ $ kubectl get pods
 # Listando services
 $ kubectl get services
 ```
-
 
 **Comandos Minikube**
 ```bash 
