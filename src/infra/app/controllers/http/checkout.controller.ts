@@ -33,6 +33,7 @@ export class CheckoutController {
       const { order, products, total } = await this.checkout.execute({
         orderId: id,
       })
+
       return CheckoutPresenter.toHttp(order, products, total)
     } catch (error: any) {
       if (error instanceof ResourceAlreadyExists)

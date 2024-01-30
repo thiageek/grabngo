@@ -38,6 +38,7 @@ describe('CreateOrderController', () => {
     const db = app.get(PrismaService)
     await db.productCategories.deleteMany()
     await db.item.deleteMany()
+    await db.paymentTransaction.deleteMany()
     await db.order.deleteMany()
     await db.product.deleteMany()
     await db.category.deleteMany()
@@ -71,5 +72,10 @@ describe('CreateOrderController', () => {
         ],
       })
       .expect(201)
+      .expect((res) => {
+        expect(res.body).toHaveProperty('status')
+        expect(res.body.status).toHaveProperty('name')
+        expect(res.body.status.name).toBe('CREATED')
+      })
   })
 })

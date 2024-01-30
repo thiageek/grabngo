@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { ProductRepository } from '@/domain/application/repositories/product-repository'
-import { isNil } from "@nestjs/common/utils/shared.utils"
+import { isNil } from '@nestjs/common/utils/shared.utils'
 
 export interface InputDeleteProduct {
   id: string

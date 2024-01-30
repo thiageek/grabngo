@@ -5,6 +5,7 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Order } from '@/domain/enterprise/entities/order'
 import { OrderItem } from '@/domain/enterprise/entities/order-item'
 import { ResourceNotFound } from '@/core/errors/resource-not-found-exists.error'
+import { OrderStatusNameEnum } from '@prisma/client'
 
 let sut: UpdateOrder
 let repository: OrderRepository
@@ -21,8 +22,11 @@ describe('Update order', () => {
       observation: 'test observation',
     })
 
+    const status = await repository.findStatus(OrderStatusNameEnum.CREATED)
+
     const order = Order.create({
       clientId: new UniqueEntityId(),
+      status: status,
       items: [item],
     })
 
@@ -30,19 +34,19 @@ describe('Update order', () => {
 
     await sut.execute({
       id: order.id.toString(),
-      status: 'in-queue',
+      status: OrderStatusNameEnum.INQUEUE,
     })
 
     const spy = await repository.findOrder(order.id.toString())
     expect(spy).toBeTruthy()
-    expect(spy?.status.value).toEqual('in-queue')
+    expect(spy?.status.name).toEqual(OrderStatusNameEnum.INQUEUE)
   })
 
   it('should not be able throw new error when order is invalid', () => {
     expect(async () => {
       await sut.execute({
         id: 'invalid-id',
-        status: 'in-queue',
+        status: OrderStatusNameEnum.INQUEUE,
       })
     }).rejects.toThrow(ResourceNotFound)
   })

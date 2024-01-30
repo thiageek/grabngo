@@ -8,6 +8,11 @@ import { ResourceNotFound } from '@/core/errors/resource-not-found-exists.error'
 import { ProductRepository } from '../../repositories/product-repository'
 import { MockProductRepository } from '@test/repositories/mock-product-repository'
 import { Product } from '@/domain/enterprise/entities/product'
+import {
+  OrderStatusNameEnum,
+  PaymentTransactionStatusEnum,
+} from '@prisma/client'
+import { PaymentTransaction } from '@/domain/enterprise/entities/payment-transaction'
 
 let sut: Checkout
 let repositoryOrder: OrderRepository
@@ -34,12 +39,27 @@ describe('Checkout order', () => {
       observation: 'test observation',
     })
 
+    const status = await repositoryOrder.findStatus(OrderStatusNameEnum.CREATED)
+
     const order = Order.create({
       clientId: new UniqueEntityId(),
+      status: status,
       items: [item],
     })
 
     await repositoryOrder.saveOrder(order)
+
+    await repositoryOrder.addPaymentTransaction(
+      PaymentTransaction.create({
+        orderId: order.id.toString(),
+        transactionId: 'test-transaction-id',
+        transactionStatus: PaymentTransactionStatusEnum.APPROVED,
+        transactionMethod: 'CREDITCARD',
+        transactionGateway: 'MERCADOPAGO',
+        transactionDatetime: new Date(),
+        amount: 100,
+      }),
+    )
 
     const spy = await sut.execute({
       orderId: order.id.toString(),
@@ -47,6 +67,9 @@ describe('Checkout order', () => {
 
     expect(spy).toBeTruthy()
     expect(spy.total).toEqual(100)
+    expect(spy.order.paymentStatus).toEqual(
+      PaymentTransactionStatusEnum.APPROVED,
+    )
   })
 
   it('should not be able throw new error when order is invalid', () => {

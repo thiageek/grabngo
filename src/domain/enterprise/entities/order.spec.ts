@@ -1,14 +1,20 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Order } from './order'
 import { OrderItem } from './order-item'
+import { OrderStatus } from '@/domain/enterprise/entities/order-status'
 
 describe('Order', () => {
   it('should be able create order', () => {
     const item = OrderItem.create({
       productId: new UniqueEntityId(),
     })
+    const status = OrderStatus.create({
+      name: 'CREATED',
+      description: 'test',
+    })
     const spy = Order.create({
       clientId: new UniqueEntityId(),
+      status: status,
       items: [item],
     })
 
@@ -20,8 +26,13 @@ describe('Order', () => {
     const item = OrderItem.create({
       productId: new UniqueEntityId(),
     })
+    const status = OrderStatus.create({
+      name: 'CREATED',
+      description: 'test',
+    })
     const spy = Order.create({
       clientId: new UniqueEntityId(),
+      status: status,
       items: [item],
     })
 
@@ -40,8 +51,15 @@ describe('Order', () => {
       productId: new UniqueEntityId(),
       quantity: 2,
     })
+
+    const status = OrderStatus.create({
+      name: 'CREATED',
+      description: 'test',
+    })
+
     const spy = Order.create({
       clientId: new UniqueEntityId(),
+      status: status,
       items: [item],
     })
 

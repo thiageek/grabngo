@@ -18,7 +18,7 @@ import { OrderRepository } from './domain/application/repositories/order-reposit
 import { PrismaOrderRepository } from './infra/app/repositories/prisma/prisma-order-repository'
 import { CreateOrder } from './domain/application/use-cases/create-order'
 import { CreateOrderController } from './infra/app/controllers/http/create-order.controller'
-import { FetchOrdersController } from './infra/app/controllers/http/feth-orders.controller'
+import { FetchOrdersController } from './infra/app/controllers/http/fetch-orders.controller'
 import { FetchOrder } from './domain/application/use-cases/fetch-order'
 import { UpdateOrderController } from './infra/app/controllers/http/update-order.controller'
 import { UpdateOrder } from './domain/application/use-cases/update-order'
@@ -42,6 +42,8 @@ import { FetchProducts } from '@/domain/application/use-cases/fetch-products'
 import { ValidateClientMiddleware } from './infra/common/middlewares/validate-client.middleware'
 import { FindClientController } from './infra/app/controllers/http/find-client.controller'
 import { FindClient } from './domain/application/use-cases/find-client'
+import { UpdatePaymentTransactionController } from '@/infra/app/controllers/http/update-payment-transaction.controller'
+import { CreatePaymentTransaction } from '@/domain/application/use-cases/create-payment-transaction'
 
 @Module({
   imports: [
@@ -67,6 +69,7 @@ import { FindClient } from './domain/application/use-cases/find-client'
     UpdateOrderItemController,
     DeleteOrderItemController,
     CheckoutController,
+    UpdatePaymentTransactionController,
     SigUpController,
     SigInController,
   ],
@@ -97,6 +100,7 @@ import { FindClient } from './domain/application/use-cases/find-client'
     UpdateOrderItem,
     DeleteOrderItem,
     Checkout,
+    CreatePaymentTransaction,
     CreateUser,
     {
       provide: APP_INTERCEPTOR,

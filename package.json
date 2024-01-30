@@ -26,7 +26,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "pretest:e2e": "npm run db:test:restart",
-    "test:e2e": "cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5433/mydb?schema=public  jest --no-cache --config ./jest-e2e.json"
+    "test:e2e": "cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5433/mydb?schema=public  jest --no-cache --config ./jest-e2e.json",
+    "test:e2e:sequence": "cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5433/mydb?schema=public  jest --no-cache --config ./jest-e2e.json --runInBand"
   },
   "dependencies": {
     "@faker-js/faker": "^8.2.0",

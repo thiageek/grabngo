@@ -44,6 +44,8 @@ model ProductCategories {
   product    Product  @relation(fields: [productId], references: [id])
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
+
+  @@map("product_categories")
 }
 
 model Media {
@@ -69,10 +71,12 @@ model Order {
   client      Client?   @relation(fields: [clientId], references: [id])
   clientId    String?
   orderNumber Int
-  status      String
+  status      OrderStatus?   @relation(fields: [statusId], references: [id])
+  statusId    String
   createdAt   DateTime
   updatedAt   DateTime?
   Item        Item[]
+  PaymentTransactions PaymentTransaction[]
 
   @@map("orders")
 }
@@ -91,6 +95,28 @@ model Item {
   @@map("items")
 }
 
+model OrderStatus {
+  id            String    @id @default(uuid())
+  name          OrderStatusNameEnum    @unique
+  sequenceOrder Int
+  description   String
+  Order         Order[]
+
+  @@map("status")
+}
+
+enum OrderStatusNameEnum {
+  CREATED
+  INQUEUE
+  EXPIRED
+  INPROGRESS
+  CANCELED
+  READY
+  WAITINGPICKUP
+  DISCARDED
+  DELIVERED
+}
+
 model User {
   id        String    @id @default(uuid())
   name      String
@@ -102,4 +128,41 @@ model User {
   updatedAt DateTime?
 
   @@map("users")
+}
+
+model PaymentTransaction {
+  id String @id @default(uuid())
+  order Order @relation(fields: [orderId], references: [id])
+  orderId String
+  transactionId String
+  transactionStatus PaymentTransactionStatusEnum
+  transactionMethod PaymentTransactionMethodEnum
+  transactionGateway PaymentTransactionGatewayEnum
+  transactionDatetime DateTime
+  amount Int
+  createdAt DateTime
+}
+
+enum PaymentTransactionStatusEnum {
+  WAITING
+  INPROGRESS
+  CANCELED
+  APPROVED
+  REJECTED
+  REFUNDED
+  CHARGEBACK
+}
+
+enum PaymentTransactionMethodEnum {
+  CREDITCARD
+  DEBITCARD
+  PIX
+  BOLETO
+  TRANSFER
+  CASH
+}
+
+enum PaymentTransactionGatewayEnum {
+  CASH
+  MERCADOPAGO
 }

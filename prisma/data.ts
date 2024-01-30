@@ -1,3 +1,5 @@
+import { OrderStatusNameEnum } from '@prisma/client'
+
 export const adminUser = {
   login: 'admin@grabngo',
   name: 'Admin',
@@ -48,5 +50,53 @@ export const productsByCategory = [
         description: 'Lata de 350ml Guaraná',
       },
     ],
+  },
+]
+
+export const orderStatusList = [
+  {
+    name: OrderStatusNameEnum.CREATED,
+    sequenceOrder: 1,
+    description: 'O pedido foi criado pelo cliente.',
+  },
+  {
+    name: OrderStatusNameEnum.INQUEUE,
+    sequenceOrder: 2,
+    description: 'O pedido está na fila para ser preparado.',
+  },
+  {
+    name: OrderStatusNameEnum.EXPIRED,
+    sequenceOrder: 3,
+    description: 'O pedido expirou.',
+  },
+  {
+    name: OrderStatusNameEnum.INPROGRESS,
+    sequenceOrder: 4,
+    description: 'O pedido está sendo preparado.',
+  },
+  {
+    name: OrderStatusNameEnum.CANCELED,
+    sequenceOrder: 5,
+    description: 'O pedido foi cancelado.',
+  },
+  {
+    name: OrderStatusNameEnum.READY,
+    sequenceOrder: 6,
+    description: 'O pedido está pronto e em breve poderá ser entregue.',
+  },
+  {
+    name: OrderStatusNameEnum.WAITINGPICKUP,
+    sequenceOrder: 7,
+    description: 'O pedido está pronto e aguardando retirada.',
+  },
+  {
+    name: OrderStatusNameEnum.DISCARDED,
+    sequenceOrder: 8,
+    description: 'O pedido foi descartado.',
+  },
+  {
+    name: OrderStatusNameEnum.DELIVERED,
+    sequenceOrder: 9,
+    description: 'O pedido foi entregue ao cliente.',
   },
 ]

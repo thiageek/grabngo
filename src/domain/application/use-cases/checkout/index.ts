@@ -4,6 +4,7 @@ import { Order } from '@/domain/enterprise/entities/order'
 import { ResourceNotFound } from '@/core/errors/resource-not-found-exists.error'
 import { ProductRepository } from '../../repositories/product-repository'
 import { Product } from '@/domain/enterprise/entities/product'
+import { PaymentTransactionStatusEnum } from '@prisma/client'
 
 export interface Input {
   orderId: string
@@ -37,6 +38,8 @@ export class Checkout {
         subTotal.push(orderItem.quantity * product.price)
       }
     }
+
+    order.paymentStatus = await this.orderRepository.findPaymentStatus(orderId)
 
     const total = subTotal.reduce((amount, subTotal) => amount + subTotal, 0)
 

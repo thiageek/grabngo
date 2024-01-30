@@ -3,6 +3,7 @@ import { Order } from '@/domain/enterprise/entities/order'
 import { orderItemsFactory } from '../../factories/order-items-factory'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { OrderRepository } from '../../repositories/order-repository'
+import { OrderStatusNameEnum } from '@prisma/client'
 
 export interface InputCreateOrder {
   clientId?: string
@@ -27,9 +28,15 @@ export class CreateOrder {
     items,
     clientId,
   }: InputCreateOrder): Promise<OutputCreateOrder> {
+    const status = await this.repository.findStatus(OrderStatusNameEnum.CREATED)
+    if (!status) {
+      throw new Error('Order status not found')
+    }
+
     const orderItems = orderItemsFactory(items)
     const order = Order.create({
       items: orderItems,
+      status: status,
       clientId: clientId ? new UniqueEntityId(clientId) : null,
     })
 
