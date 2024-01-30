@@ -4,7 +4,7 @@ import { EnvService } from './infra/providers/env/env.service'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, { cors: false })
   const configService = app.get(EnvService)
   app.setGlobalPrefix(`api/${configService.get('VERSION')}`)
   const port = configService.get('PORT')

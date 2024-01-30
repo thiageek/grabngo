@@ -35,6 +35,12 @@ $ docker-compose up -d db app
 
 ii. Acesse a aplicação em http://localhost:3000
 
+### Kubernates
+
+Siga as intrucões no link a seguir:
+
+[K8s](./k8s/grabngo-k8s.md)
+
 ### Local
 
 i. Instale as dependências:

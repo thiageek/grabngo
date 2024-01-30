@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grabngo-deployment
+  labels:
+    app: grabngo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grabngo
+  template:
+    metadata:
+      labels:
+        app: grabngo
+    spec:
+      containers:
+        - name: grabngo
+          image: 'thiageek/grabngo:test'
+          imagePullPolicy: Always
+          resources:
+              requests:
+                cpu: "500m"
+              limits:
+                cpu: "1000m"
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: grabngo-secrets  
+                  key: databaseUrl  
