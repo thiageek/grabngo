@@ -4,7 +4,7 @@
 		"name": "Grab&Go",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "450211",
-		"_collection_link": "https://blue-capsule-538489.postman.co/workspace/Grab%2526Go~820079eb-71e9-4349-9f81-99e50938ac10/collection/450211-8e9be04f-e3de-425d-b648-5776a826e4f9?action=share&source=collection_link&creator=450211"
+		"_collection_link": "https://blue-capsule-538489.postman.co/workspace/Grab%26Go~820079eb-71e9-4349-9f81-99e50938ac10/collection/450211-8e9be04f-e3de-425d-b648-5776a826e4f9?action=share&source=collection_link&creator=450211"
 	},
 	"item": [
 		{
@@ -454,6 +454,46 @@
 								"order",
 								"9339637f-455f-4b35-bd1b-e50c72d97ce5",
 								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Webhooks",
+			"item": [
+				{
+					"name": "Update payment status",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YTgzMmFiNC1kZmIxLTQ3MzUtODIzOC0xYzQ4YjQ3MTM3MDEiLCJsb2dpbiI6ImFkbWluQGdyYWJuZ29AZ3JhYm5nbyIsIm5hbWUiOiJBZG1pbiIsImVuYWJsZWQiOnRydWUsImlhdCI6MTcwNjczNTYwNiwiZXhwIjoxNzA2ODIyMDA2fQ.WTiWRbzS5hPADUQVWFo63yxCFIr5CxAqh0KTP99wMOI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transactionId\": \"transactionId-12312321\",\n    \"transactionMethod\": \"CREDITCARD\",\n    \"transactionGateway\": \"MERCADOPAGO\",\n    \"transactionStatus\": \"APPROVED\",\n    \"transactionDatetime\": \"2023-11-10 14:34:33:400\",\n    \"amount\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PATH}}/api/v1/webhook-payment/d124378e-0d41-4598-9e36-676588202ea7",
+							"host": [
+								"{{PATH}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"webhook-payment",
+								"d124378e-0d41-4598-9e36-676588202ea7"
 							]
 						}
 					},
