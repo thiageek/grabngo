@@ -113,6 +113,8 @@ ___
 
 ## Fluxo de eventos:
 
+### Módulo 1
+
 1.	Cadastro de cliente
 
 ![img.png](docs/eventos/1.png)
@@ -123,18 +125,17 @@ ___
 
 3.	Criar, editar e remover produto
 
-        a.	Criar produto
+ i. Criar produto
 
-        ![img.png](docs/eventos/3a.png)
+![img.png](docs/eventos/3a.png)
 
-        b. Editar produto
+ ii. Editar produto
 
-        ![img.png](docs/eventos/3b.png)
+![img.png](docs/eventos/3b.png)
 
-        c. Remover produto
-        
-        ![img.png](docs/eventos/3c.png)
+iii. Remover produto
 
+![img.png](docs/eventos/3c.png)
 
 4.  Buscar produtos por categoria
 
@@ -147,6 +148,31 @@ ___
 6.	Listar os pedidos
 
 ![img.png](docs/eventos/6.png)
+
+### Módulo 2
+
+1. Checkout Pedido que deverá receber os produtos solicitados e retornar a identificação do pedido
+
+![img.png](docs/eventos/7.png)
+
+2. Consultar status pagamento pedido, que informa se o pagamento foi aprovado ou não
+
+![img.png](docs/eventos/7.png)
+
+3. Webhook para receber confirmação de pagamento aprovado ou recusado
+
+![img.png](docs/eventos/8.png)
+
+4. A lista de pedidos deverá retorná-los com suas descrições, ordenados com a seguinte regra:
+   1. Pronto > Em preparação > Recebido
+   2. Pedidos mais antigos primeiro e mais novos depois
+   3. Pedidos com status Finalizado não devem aparecer na lista
+
+![img.png](docs/eventos/9.png)
+
+5. Atualizar o status do pedido
+
+![img.png](docs/eventos/10.png)
 
 ___
 ### Desenvolvido pelo grupo 41
